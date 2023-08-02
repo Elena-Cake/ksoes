@@ -1,0 +1,130 @@
+// COLORS
+
+$color-bg-header: rgb(255, 255, 255);
+$color-bg: rgba(150, 183, 207, 0.141);
+$color-bg-profile: rgba(23, 132, 211, 0.312);
+
+$color-bg-container: #fff;
+$color-border-container: rgba(38, 73, 96, 0.25);
+$color-box-shadow: 0 0 10px 5px rgba(150, 183, 207, .1);
+
+$color-bg-button: rgba(2, 93, 154, 0.357);
+$color-bg-button-hover: rgba(2, 93, 154, 0.657);
+$color-bg-button-active: rgba(2, 93, 154, 0.807);
+
+$color-text: rgb(8, 49, 77);
+$color-text-active: rgb(3, 114, 188);
+$color-text-light: rgb(255, 255, 255);
+$color-text-warn: rgb(144, 0, 31);
+
+// FONTS
+
+.font-h1 {
+  color: $color-text;
+  font-size: 35px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin: 20px 10px 20px 0;
+  padding: 0;
+}
+
+.font-h2 {
+  color: $color-text;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.font-text {
+  color: $color-text;
+  font-size: 17px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+
+
+// STYLE CONTAINERS
+
+.container {
+  background-color: $color-bg-container;
+  border: $color-border-container .5px solid;
+  border-radius: 20px;
+  box-shadow: $color-box-shadow;
+  padding: 18px 30px;
+  margin: 5px;
+}
+
+.button {
+  border: 0;
+  border-radius: 10px;
+  box-shadow: $color-box-shadow;
+  background-color: $color-bg-button;
+  padding: 3px 5px;
+  justify-content: center;
+  align-items: center;
+  transition: background-color ease .3s, color ease .5s;
+
+  &:hover {
+    background-color: $color-bg-button-hover;
+    color: $color-text-light;
+  }
+}
+
+.button_active {
+  background-color: $color-bg-button-active;
+  color: $color-text-light;
+  font-weight: bold;
+}
+
+.input {
+  position: relative;
+  background-color: $color-bg-container;
+  border: $color-border-container .5px solid;
+  border-radius: 10px;
+}
+
+// SEARCH
+
+.searhForm {
+  @extend .container;
+  display: grid;
+  grid-template-columns: auto 15%;
+  overflow: hidden;
+  padding: 0;
+}
+
+.searchInput {
+  border: 0;
+  padding-left: 20px;
+
+  &:focus {
+    border: 0;
+  }
+}
+
+.searchSelect {
+  border: 0;
+  border-bottom: 1px solid $color-border-container;
+  padding: 5px;
+}
+
+.searchBtn {
+  @extend .button;
+  width: 100%;
+  height: 100%;
+  padding: 10px 15px;
+  border-radius: 0;
+}
+
+// LINKS
+
+.link {
+  opacity: 1;
+  text-decoration: none;
+  transition: opacity ease .5s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .7s;
+  }
+}

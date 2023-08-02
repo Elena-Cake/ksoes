@@ -1,0 +1,36 @@
+@import '../default_variables.scss';
+
+.login {
+    @extend .container;
+}
+
+.login__title {
+    @extend .font-h1;
+}
+
+.form__input {
+
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    margin: 5px 0;
+    position: relative;
+}
+
+.input__error {
+    color: #df1414;
+    font-size: 12px;
+    position: absolute;
+    left: 420px;
+    bottom: -5px;
+}
+
+.login__btnOkey {
+    @extend .searchBtn;
+    padding: 10px 15px;
+    margin: 10px 15px;
+    border-radius: 20px;
+}
+
+.login__formItem {
+    @extend .searchInput;
+}
