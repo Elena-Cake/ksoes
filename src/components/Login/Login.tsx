@@ -24,7 +24,7 @@ const Login: React.FC = () => {
         // navigate("/profile")
     }
     return (
-        <div className="popup__wrapper">
+        <div className="popup__wrapper ">
             <LoginForm onSubmit={onSubmit} />
         </div>
     )
