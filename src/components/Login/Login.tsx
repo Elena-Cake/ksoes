@@ -6,9 +6,10 @@ import './Login.scss';
 // import * as yup from 'yup';
 // import { loginMe } from "../../redux/authReduser";
 import { useDispatch, useSelector } from "react-redux";
-import { valuesType, LoginForm } from "./LoginForm";
+import { LoginForm } from "./LoginForm";
 import { RootState, TypedDispatch } from "../../store/store";
 import { login, setUserName } from "../../store/authSlice";
+import { LoginFormValues } from "../../types/types";
 
 const Login: React.FC = () => {
     // const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Login: React.FC = () => {
 
     const isAuth = useSelector((state: RootState) => state.auth.isAuth)
 
-    const onSubmit = (values: valuesType) => {
+    const onSubmit = (values: LoginFormValues) => {
         const { username, password } = values
         dispatch(login({ username: username, password: password }))
         dispatch(setUserName({ userName: username }))

@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
+import { LoginFormValues } from '../types/types'
 
 const initialState = {
     login: null as string | null,
@@ -10,7 +11,7 @@ const initialState = {
 
 export const login = createAsyncThunk(
     'auth/login',
-    async (formValues: { username: string, password: string }, { rejectWithValue }) => {
+    async (formValues: LoginFormValues, { rejectWithValue }) => {
         const response = await api.login(formValues)
         return response
     }

@@ -2,13 +2,11 @@ import React from "react";
 import './Login.scss';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useAppSelector } from "../../store/store";
+import { LoginFormValues } from "../../types/types";
 
-export type valuesType = {
-    username: string,
-    password: string
-};
+
 type PropsType = {
-    onSubmit: (values: valuesType) => void;
+    onSubmit: (values: LoginFormValues) => void;
 };
 export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
     const error = useAppSelector(s => s.auth.error)

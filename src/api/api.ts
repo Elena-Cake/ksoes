@@ -1,4 +1,5 @@
 import axios from "axios"
+import { LoginFormValues } from "../types/types"
 
 const instance = axios.create({
     baseURL: 'https://ares.ksoes.ru/',
@@ -21,8 +22,8 @@ type LoginResResType = {
 
 export const api = {
 
-    // https://ares.ksoes.ru/_authorization.php?username=logger&password=loggerAnc1&func=getToken
-    login(formValues: { username: string, password: string }) {
+    // https://ares.ksoes.ru/_authorization.php?username=test&password=test&func=getToken
+    login(formValues: LoginFormValues) {
         return instance.get<LoginResResType>(`_authorization.php?username=${formValues.username}&password=${formValues.password}&func=getToken`)
             .then(res => {
                 console.log(res)
