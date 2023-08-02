@@ -8,7 +8,7 @@ import './Login.scss';
 import { useDispatch, useSelector } from "react-redux";
 import { valuesType, LoginForm } from "./LoginForm";
 import { RootState, TypedDispatch } from "../../store/store";
-import { login } from "../../store/authSlice";
+import { login, setUserName } from "../../store/authSlice";
 
 const Login: React.FC = () => {
     // const navigate = useNavigate();
@@ -19,6 +19,7 @@ const Login: React.FC = () => {
     const onSubmit = (values: valuesType) => {
         const { username, password } = values
         dispatch(login({ username: username, password: password }))
+        dispatch(setUserName({ userName: username }))
     }
     if (isAuth) {
         // navigate("/profile")

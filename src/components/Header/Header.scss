@@ -1,0 +1,21 @@
+@import '../default_variables.scss';
+
+.header {
+    min-height: 40px;
+    background-color: $color-bg-header;
+    display: grid;
+    grid-template-columns: auto minmax(50px, 200px) 70px;
+    gap: 2%;
+    grid-template-areas: 'dot login logout';
+    color: #ffffff;
+    align-items: center;
+}
+
+.header__name {
+    grid-area: login;
+    text-align: right;
+}
+
+.header__logout {
+    grid-area: logout;
+}

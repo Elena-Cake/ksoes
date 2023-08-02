@@ -2,7 +2,7 @@ import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 
 const initialState = {
-    login: 'test',
+    login: null as string | null,
     isAuth: false,
     token: '' as string | null
 }
@@ -23,8 +23,13 @@ const authSlice = createSlice({
             const token = localStorage.getItem('token');
             if (token) state.isAuth = true
         },
-        checkTokenv(state, action: PayloadAction<{ title: string }>) {
-
+        logout(state) {
+            state.isAuth = false
+            state.login = null
+            localStorage.removeItem('token')
+        },
+        setUserName(state, action: PayloadAction<{ userName: string }>) {
+            state.login = action.payload.userName
         }
     },
     extraReducers: (builder) => {
@@ -43,7 +48,7 @@ const authSlice = createSlice({
     }
 })
 export const {
-    checkToken
+    checkToken, logout, setUserName
 } = authSlice.actions
 export default authSlice.reducer
 

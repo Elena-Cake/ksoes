@@ -4,6 +4,7 @@ import './App.css';
 import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken } from '../store/authSlice';
+import Header from './Header/Header';
 
 function App() {
 
@@ -17,7 +18,9 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       {!isAuth && <Login />}
+
     </div>
   );
 }
