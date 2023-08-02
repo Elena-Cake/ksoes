@@ -1,5 +1,5 @@
 import React from "react";
-import s from './Login.module.scss';
+import './Login.scss';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 export type valuesType = {
@@ -21,8 +21,8 @@ export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
     //     // confirmPassword: yup.string().typeError('String').oneOf([yup.ref('password')], 'not equal pass').required('Required'),
     // })
     return (
-        <div className={s.login}>
-            <h1 className={s.login__title}>Login</h1>
+        <div className={'login'}>
+            <h1 className={'login__title'}>Login</h1>
             <Formik
                 initialValues={{
                     email: '',
@@ -40,7 +40,7 @@ export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
                 {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
 
                     <Form onSubmit={handleSubmit}>
-                        <div className={s.form__input}>
+                        <div className={'form__input'}>
                             <label>Email</label>
                             <Field
                                 name='email'
@@ -48,10 +48,10 @@ export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
                                 onBlur={handleBlur}
                                 value={values.email}
                                 placeholder="What your email?"
-                                className={s.login__formItem} />
-                            <ErrorMessage className={s.input__error} name="email" component="span"></ErrorMessage>
+                                className={'login__formItem'} />
+                            <ErrorMessage className={'input__error'} name="email" component="span"></ErrorMessage>
                         </div>
-                        <div className={s.form__input}>
+                        <div className={'form__input'}>
                             <label>Password</label>
                             <Field
                                 name={'password'}
@@ -60,31 +60,10 @@ export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
                                 onBlur={handleBlur}
                                 value={values.password}
                                 placeholder="What your password?"
-                                className={s.login__formItem} />
-                            <ErrorMessage className={s.input__error} name="password" component="span"></ErrorMessage>
+                                className={'login__formItem'} />
+                            <ErrorMessage className={'input__error'} name="password" component="span"></ErrorMessage>
                         </div>
-                        {/* <div className={s.form__input}>
-                        <label htmlFor={'confirmPassword'}>Confirm Password</label>
-                        <Field
-                            name={'confirmPassword'}
-                            type={'password'}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.confirmPassword}
-                            placeholder="Copy pass)" />
-                        <ErrorMessage className={s.input__error} name="confirmPassword" component="span"></ErrorMessage>
-                    </div> */}
-                        <div className={s.form__input}>
-                            <label>I'm not a robot</label>
-                            <Field
-                                name={'isRobot'}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                selected={!values.isRobot}
-                                type={"checkbox"} />
-                        </div>
-
-                        <button className={s.login__btnOkey} disabled={!isValid && !dirty} type="submit">Сome in</button>
+                        <button className={'login__btnOkey'} disabled={!isValid && !dirty} type="submit">Сome in</button>
                     </Form>
                 )}
             </Formik>

@@ -1,7 +1,18 @@
 @import '../default_variables.scss';
 
+.popup__wrapper {
+    @extend .popup-wrapper;
+
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    background-color: #bb3838;
+}
+
 .login {
-    @extend .container;
+    @extend .popup__container;
 }
 
 .login__title {

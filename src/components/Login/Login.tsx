@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import './Login.scss';
+
 // import * as yup from 'yup';
 // import { loginMe } from "../../redux/authReduser";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +24,7 @@ const Login: React.FC = () => {
         // navigate("/profile")
     }
     return (
-        <div >
+        <div className="popup__wrapper">
             <LoginForm onSubmit={onSubmit} />
         </div>
     )
