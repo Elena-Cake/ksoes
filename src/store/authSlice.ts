@@ -4,7 +4,8 @@ import { api } from '../api/api'
 const initialState = {
     login: null as string | null,
     isAuth: false,
-    token: '' as string | null
+    token: '' as string | null,
+    error: null as string | null
 }
 
 export const login = createAsyncThunk(
@@ -37,10 +38,16 @@ const authSlice = createSlice({
             .addCase(login.pending, (state) => {
             })
             .addCase(login.fulfilled, (state, action) => {
-                console.log(action.payload)
+
                 if (action.payload.getToken) {
+                    state.error = null
                     localStorage.setItem('token', action.payload.getToken)
                     state.isAuth = true
+                } else {
+                    if (action.payload.error) {
+                        state.error = action.payload.error
+                        state.login = null
+                    }
                 }
             })
             .addCase(login.rejected, (state) => {

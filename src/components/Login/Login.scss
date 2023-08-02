@@ -45,3 +45,7 @@
 .login__formItem {
     @extend .searchInput;
 }
+
+.form__error {
+    @extend .font-error;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import './Login.scss';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useAppSelector } from "../../store/store";
 
 export type valuesType = {
     username: string,
@@ -10,7 +11,7 @@ type PropsType = {
     onSubmit: (values: valuesType) => void;
 };
 export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
-
+    const error = useAppSelector(s => s.auth.error)
 
     // const validationsSchema = yup.object().shape({
     //     email: yup.string().typeError('String').required('Required'),
@@ -58,6 +59,7 @@ export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
                             <ErrorMessage className={'input__error'} name="password" component="span"></ErrorMessage>
                         </div>
                         <button className={'login__btnOkey'} disabled={!isValid && !dirty} type="submit">Войти</button>
+                        <span className="form__error">{error}</span>
                     </Form>
                 )}
             </Formik>

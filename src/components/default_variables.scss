@@ -21,7 +21,7 @@ $color-text-warn: rgb(144, 0, 31);
 
 .font-h1 {
   color: $color-text;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 700;
   letter-spacing: 1.5px;
   margin: 20px 10px 20px 0;
@@ -40,6 +40,11 @@ $color-text-warn: rgb(144, 0, 31);
   font-weight: 400;
   margin: 0;
   padding: 0;
+}
+
+.font-error {
+  color: $color-text-warn;
+  font-size: 12px;
 }
 
 
