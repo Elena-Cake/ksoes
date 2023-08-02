@@ -8,6 +8,7 @@ import './Login.scss';
 import { useDispatch, useSelector } from "react-redux";
 import { valuesType, LoginForm } from "./LoginForm";
 import { RootState, TypedDispatch } from "../../store/store";
+import { login } from "../../store/authSlice";
 
 const Login: React.FC = () => {
     // const navigate = useNavigate();
@@ -16,9 +17,8 @@ const Login: React.FC = () => {
     const isAuth = useSelector((state: RootState) => state.auth.isAuth)
 
     const onSubmit = (values: valuesType) => {
-        const { email, password, isRobot, captcha = null } = values
-        const rememberMe = !isRobot
-        // dispatch(loginMe(email, password, rememberMe, captcha))
+        const { username, password } = values
+        dispatch(login({ username: username, password: password }))
     }
     if (isAuth) {
         // navigate("/profile")

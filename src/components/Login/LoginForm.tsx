@@ -3,11 +3,8 @@ import './Login.scss';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 export type valuesType = {
-    email: string;
-    password: string;
-    confirmPassword?: string;
-    isRobot: boolean;
-    captcha?: string | null;
+    username: string,
+    password: string
 };
 type PropsType = {
     onSubmit: (values: valuesType) => void;
@@ -22,14 +19,11 @@ export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
     // })
     return (
         <div className={'login'}>
-            <h1 className={'login__title'}>Login</h1>
+            <h1 className={'login__title'}>Войдите</h1>
             <Formik
                 initialValues={{
-                    email: '',
-                    password: '',
-                    confirmPassword: '',
-                    isRobot: false,
-                    captcha: null
+                    username: '',
+                    password: ''
                 }}
                 validateOnBlur
                 // validationSchema={validationsSchema}
@@ -41,29 +35,29 @@ export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
 
                     <Form onSubmit={handleSubmit}>
                         <div className={'form__input'}>
-                            <label>Email</label>
+                            <label>Логин</label>
                             <Field
-                                name='email'
+                                name='username'
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                value={values.email}
-                                placeholder="What your email?"
+                                value={values.username}
+                                placeholder="Введите логин"
                                 className={'login__formItem'} />
-                            <ErrorMessage className={'input__error'} name="email" component="span"></ErrorMessage>
+                            <ErrorMessage className={'input__error'} name="username" component="span"></ErrorMessage>
                         </div>
                         <div className={'form__input'}>
-                            <label>Password</label>
+                            <label>Пароль</label>
                             <Field
                                 name={'password'}
                                 type={'password'}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.password}
-                                placeholder="What your password?"
+                                placeholder="Введите пароль"
                                 className={'login__formItem'} />
                             <ErrorMessage className={'input__error'} name="password" component="span"></ErrorMessage>
                         </div>
-                        <button className={'login__btnOkey'} disabled={!isValid && !dirty} type="submit">Сome in</button>
+                        <button className={'login__btnOkey'} disabled={!isValid && !dirty} type="submit">Войти</button>
                     </Form>
                 )}
             </Formik>
