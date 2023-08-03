@@ -13,8 +13,12 @@ const Header: React.FC = () => {
         <header className="header">
             <span className="header__name">{userName}</span>
             {isAuth &&
-                <Button icon="pi pi-times" outlined severity="danger" label="Выйти"
-                    className="header__logout" onClick={() => { dispatch(logout()) }} />
+                <Button icon="pi pi-times" label="Выйти" iconPos="right"
+                    text raised
+                    className="header__logout" onClick={() => { dispatch(logout()) }}
+                    style={{ 'padding': '5px', 'color': '#fff' }}
+                >
+                </Button>
             }
         </header>
     )

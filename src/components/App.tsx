@@ -4,7 +4,7 @@ import './App.css';
 import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken } from '../store/authSlice';
-import Header from './Header/Header';
+import Header from './Header/Header'; import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 function App() {
 

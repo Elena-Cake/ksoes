@@ -18,7 +18,7 @@ export const LoginForm: React.FC<PropsType> = ({ onSubmit }) => {
     // })
     return (
         <div className={'login'}>
-            <h1 className={'login__title'}>Войдите</h1>
+            <h1 className={'login__title'}>Авторизация</h1>
             <Formik
                 initialValues={{
                     username: '',

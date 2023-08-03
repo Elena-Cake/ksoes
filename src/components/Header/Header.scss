@@ -4,7 +4,7 @@
     min-height: 40px;
     background-color: $color-bg-header;
     display: grid;
-    grid-template-columns: auto minmax(50px, 200px) 70px;
+    grid-template-columns: auto minmax(50px, 200px) 120px;
     gap: 2%;
     grid-template-areas: 'dot login logout';
     color: #ffffff;
@@ -18,5 +18,5 @@
 
 .header__logout {
     grid-area: logout;
-    margin-right: 10px;
+    margin: 10px;
 }
