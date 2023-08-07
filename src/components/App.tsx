@@ -21,18 +21,15 @@ function App() {
   </select>
 
   const observatory = useAppSelector(s => s.dataSlice.observatory)
-  const observatoryElements = <DataTable value={observatory} tableStyle={{ minWidth: '50rem' }}>
-    <Column field="code" header="Code"></Column>
-    <Column field="name" header="Name"></Column>
-  </DataTable>
+  // const observatoryElements =
 
   const means = useAppSelector(s => s.dataSlice.means)
   console.log('means app', means)
   const meansKeys = Object.keys(means)
   const meansData = [] as TreeTableType[]
 
+  // формирование данных для TreeTable
   meansKeys.forEach((key, mainId) => {
-
     // @ts-ignore
     const keysInstruments = Object.keys(means[key])
     if (keysInstruments.length > 1) {
@@ -49,15 +46,15 @@ function App() {
           },
           icon: 'pi pi-fw pi-file'
         })
-        meansData.push({
-          key: mainId,
-          label: key,
-          data: {
-            code: `${key} (${keysInstruments.length})`
-          },
-          icon: 'pi pi-fw pi-inbox',
-          children: [...childrens]
-        })
+      })
+      meansData.push({
+        key: mainId,
+        label: key,
+        data: {
+          code: `${key} (${keysInstruments.length})`
+        },
+        icon: 'pi pi-fw pi-inbox',
+        children: [...childrens]
       })
     } else {
       meansData.push({
@@ -71,9 +68,6 @@ function App() {
         icon: 'pi pi-fw pi-inbox'
       })
     }
-
-
-
   })
 
 
@@ -84,8 +78,8 @@ function App() {
 
   useEffect(() => {
     if (isAuth) {
-      // dispatch(getTypes())
-      // dispatch(getObservatory())
+      dispatch(getTypes())
+      dispatch(getObservatory())
       dispatch(getMeans())
     }
   }, [isAuth])
@@ -98,15 +92,28 @@ function App() {
     <div className="App">
       <Header />
       {!isAuth && <Login />}
-      <button onClick={() => handleGetTypes()}>types</button>
-      <>{typesElements}</>
-      <button onClick={() => handleGetTypes()}>observatory</button>
-      <>{observatoryElements}</>
-      <button onClick={() => handleGetTypes()}>means</button>
-      <TreeTable value={meansData} tableStyle={{ minWidth: '50rem' }}>
-        <Column field="code" header="Code" expander></Column>
-        <Column field="name" header="Name"></Column>
-      </TreeTable>
+      <div className='main'>
+        <section className='types'>
+          <button onClick={() => handleGetTypes()}>types</button>
+          <>{typesElements}</>
+        </section>
+
+        <section className='observatory'>
+          <button onClick={() => handleGetTypes()}>observatory</button>
+          <DataTable value={observatory} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="300px" >
+            <Column field="code" header="Code"></Column>
+            <Column field="name" header="Name"></Column>
+          </DataTable>
+        </section>
+
+        <section className='means'>
+          <button onClick={() => handleGetTypes()}>means</button>
+          <TreeTable value={meansData} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="350px">
+            <Column field="code" header="Code" expander style={{ minWidth: '100px' }}></Column>
+            <Column field="name" header="Name" style={{ minWidth: '150px' }}></Column>
+          </TreeTable>
+        </section>
+      </div>
     </div>
   );
 }
