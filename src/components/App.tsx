@@ -5,22 +5,108 @@ import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken } from '../store/authSlice';
 import Header from './Header/Header'; import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { getMeans, getObservatory, getTypes } from '../store/dataSlice';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { TreeTable } from 'primereact/treetable';
+import { TreeTableType } from '../types/types';
 
 function App() {
 
   const dispatch = useAppDispatch()
   const isAuth = useAppSelector(state => state.auth.isAuth)
+  const types = useAppSelector(s => s.dataSlice.types)
+  const typesElements = <select>
+    {types.map(type => <option key={type.id}>{type.name}</option>)}
+  </select>
+
+  const observatory = useAppSelector(s => s.dataSlice.observatory)
+  const observatoryElements = <DataTable value={observatory} tableStyle={{ minWidth: '50rem' }}>
+    <Column field="code" header="Code"></Column>
+    <Column field="name" header="Name"></Column>
+  </DataTable>
+
+  const means = useAppSelector(s => s.dataSlice.means)
+  console.log('means app', means)
+  const meansKeys = Object.keys(means)
+  const meansData = [] as TreeTableType[]
+
+  meansKeys.forEach((key, mainId) => {
+
+    // @ts-ignore
+    const keysInstruments = Object.keys(means[key])
+    if (keysInstruments.length > 1) {
+      const childrens = [] as TreeTableType[]
+      keysInstruments.forEach((instrument, instrId) => {
+        childrens.push({
+          key: instrId,
+          // @ts-ignore
+          label: means[key][instrument],
+          data: {
+            code: key,
+            // @ts-ignore
+            name: means[key][instrument]
+          },
+          icon: 'pi pi-fw pi-file'
+        })
+        meansData.push({
+          key: mainId,
+          label: key,
+          data: {
+            code: `${key} (${keysInstruments.length})`
+          },
+          icon: 'pi pi-fw pi-inbox',
+          children: [...childrens]
+        })
+      })
+    } else {
+      meansData.push({
+        key: mainId,
+        label: key,
+        data: {
+          code: key,
+          // @ts-ignore
+          name: means[key][key]
+        },
+        icon: 'pi pi-fw pi-inbox'
+      })
+    }
+
+
+
+  })
+
+
   // проверка токена
   useEffect(() => {
     dispatch(checkToken())
   }, [])
 
+  useEffect(() => {
+    if (isAuth) {
+      // dispatch(getTypes())
+      // dispatch(getObservatory())
+      dispatch(getMeans())
+    }
+  }, [isAuth])
+
+  const handleGetTypes = () => {
+    dispatch(getTypes())
+  }
 
   return (
     <div className="App">
       <Header />
       {!isAuth && <Login />}
-
+      <button onClick={() => handleGetTypes()}>types</button>
+      <>{typesElements}</>
+      <button onClick={() => handleGetTypes()}>observatory</button>
+      <>{observatoryElements}</>
+      <button onClick={() => handleGetTypes()}>means</button>
+      <TreeTable value={meansData} tableStyle={{ minWidth: '50rem' }}>
+        <Column field="code" header="Code" expander></Column>
+        <Column field="name" header="Name"></Column>
+      </TreeTable>
     </div>
   );
 }

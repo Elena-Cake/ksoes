@@ -1,41 +1,76 @@
 import axios from "axios"
-import { LoginFormValues } from "../types/types"
+import { LoginFormValues, MeansRecordsType, ObservatoryRecordsType, TypesRecordsType } from "../types/types"
+
+const headers = () => {
+    return {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+}
+const getToken = () => `token=${localStorage.getItem('token')}`
 
 const instance = axios.create({
     baseURL: 'https://ares.ksoes.ru/',
     withCredentials: true,
 })
 
-type LoginResType = {
+type LoginResResType = {
     success: boolean | 0 | 1
     error: string | null
     message: string | null
     getToken?: string
 }
-type LoginResResType = {
-    result?: LoginResType
+type LoginResType = {
+    result?: LoginResResType
     success?: boolean | 0 | 1
     error?: string | null
     message?: string | null
     getToken?: string | null
 }
 
+type DataResType<R> = {
+    debug: string
+    error: string
+    message: string
+    records: R[]
+    success: boolean
+}
+
 export const api = {
 
     // https://ares.ksoes.ru/_authorization.php?username=test&password=test&func=getToken
     login(formValues: LoginFormValues) {
-        return instance.get<LoginResResType>(`_authorization.php?username=${formValues.username}&password=${formValues.password}&func=getToken`)
+        return instance.get<LoginResType>(`_authorization.php?username=${formValues.username}&password=${formValues.password}&func=getToken`)
             .then(res => {
                 console.log(res)
                 if (res.data.result) return res.data.result
                 return res.data
             })
     },
-    // 'http://172.18.27.12:3000/statistic/date/bydays/2023-06-01/2023-06-05'
-    // Выдает статистические данные отчетов по дням в заданном диапазоне дат
-    getReport(date_start: string, date_end: string) {
-        // return instance.get<any>(`statistic/date/bydays/${date_start}/${date_end}`)
-        //     .then(res => res.data)
-    },
 
+    // https://ares.ksoes.ru/api.php?act=upload_files&name=info&get=types
+    getTypes() {
+        return instance.get<DataResType<TypesRecordsType>>(`api.php?act=upload_files&name=info&get=types&${getToken()}`)
+            .then(res => {
+                return res.data
+            })
+    },
+    // https://ares.ksoes.ru/api.php?act=upload_files&name=info&get=observatory
+    getObservatory() {
+        return instance.get<DataResType<ObservatoryRecordsType>>(`api.php?act=upload_files&name=info&get=observatory&${getToken()}`)
+            .then(res => {
+                console.log('observatory', res.data)
+                return res.data
+            })
+    },
+    // https://ares.ksoes.ru/api.php?act=upload_files&name=info&get=means
+    getMeans() {
+        return instance.get<DataResType<MeansRecordsType>>(`api.php?act=upload_files&name=info&get=means&${getToken()}`)
+            .then(res => {
+                console.log('means', res.data)
+                return res.data
+            })
+    }
+
+    // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=observatory
+    // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=mean
 }

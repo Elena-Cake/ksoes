@@ -18,7 +18,7 @@ export const login = createAsyncThunk(
 )
 
 const authSlice = createSlice({
-    name: "todo",
+    name: "auth",
     initialState,
     reducers: {
         checkToken(state) {
