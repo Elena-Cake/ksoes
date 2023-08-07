@@ -10,6 +10,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { TreeTable } from 'primereact/treetable';
 import { TreeTableType } from '../types/types';
+import { Accordion, AccordionTab } from 'primereact/accordion';
 
 function App() {
 
@@ -92,27 +93,30 @@ function App() {
     <div className="App">
       <Header />
       {!isAuth && <Login />}
-      <div className='main'>
-        <section className='types'>
-          <button onClick={() => handleGetTypes()}>types</button>
-          <>{typesElements}</>
-        </section>
-        <button style={{ 'width': '100px', 'margin': '0 auto' }}>observatory</button>
-        <section className='observatory'>
-          <DataTable value={observatory} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="300px" >
-            <Column field="code" header="Code"></Column>
-            <Column field="name" header="Name"></Column>
-          </DataTable>
-        </section>
+      {isAuth &&
+        <div className='main'>
+          <section className='types'>
+            <button onClick={() => handleGetTypes()}>types</button>
+            <>{typesElements}</>
+          </section>
+          <button style={{ 'width': '100px', 'margin': '0 auto' }}>observatory</button>
+          <section className='observatory'>
+            <DataTable value={observatory} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="300px" >
+              <Column field="code" header="Code"></Column>
+              <Column field="name" header="Name"></Column>
+            </DataTable>
+          </section>
 
-        <section className='means'>
-          <button >means</button>
-          <TreeTable value={meansData} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="350px">
-            <Column field="code" header="Code" expander style={{ minWidth: '100px' }}></Column>
-            <Column field="name" header="Name" style={{ minWidth: '150px' }}></Column>
-          </TreeTable>
-        </section>
-      </div>
+          <section className='means'>
+            <button >means</button>
+            <TreeTable value={meansData} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="350px">
+              <Column field="code" header="Code" expander style={{ minWidth: '200px' }}></Column>
+              <Column field="name" header="Name" style={{ minWidth: '150px' }}></Column>
+            </TreeTable>
+          </section>
+        </div>
+      }
+
     </div >
   );
 }

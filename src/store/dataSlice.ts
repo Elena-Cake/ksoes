@@ -1,12 +1,14 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
-import { MeansRecordsAppType, MeansRecordsType, ObservatoryRecordsAppType, ObservatoryRecordsType, TypesRecordsType } from '../types/types'
+import { MeansRecordsDayType, MeansRecordsType, ObservatoryRecordsAppType, ObservatoryRecordsDayType, TypesRecordsType } from '../types/types'
 
 const initialState = {
     types: [] as TypesRecordsType[],
     observatory: [] as ObservatoryRecordsAppType[],
+    observatoryDay: [] as ObservatoryRecordsDayType[],
     // means: [] as MeansRecordsAppType[]
-    means: [] as MeansRecordsType[]
+    means: [] as MeansRecordsType[],
+    meansDay: [] as MeansRecordsDayType[]
 }
 
 export const getTypes = createAsyncThunk(
@@ -23,10 +25,24 @@ export const getObservatory = createAsyncThunk(
         return response
     }
 )
+export const getObservatoryByDay = createAsyncThunk(
+    'data/observatoryDay',
+    async () => {
+        const response = await api.getObservatoryByDay()
+        return response
+    }
+)
 export const getMeans = createAsyncThunk(
     'data/means',
     async () => {
         const response = await api.getMeans()
+        return response
+    }
+)
+export const getMeansByDay = createAsyncThunk(
+    'data/meansDay',
+    async () => {
+        const response = await api.getMeansByDay()
         return response
     }
 )
@@ -66,29 +82,35 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatory.rejected, (state) => {
             })
+            // getObservatoryByDay
+            .addCase(getObservatoryByDay.pending, (state) => {
+            })
+            .addCase(getObservatoryByDay.fulfilled, (state, action) => {
+                if (action.payload.success) {
+
+                }
+            })
+            .addCase(getObservatoryByDay.rejected, (state) => {
+            })
             // getMeans
             .addCase(getMeans.pending, (state) => {
             })
             .addCase(getMeans.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.means = action.payload.records
-                    // const keys = Object.keys(action.payload.records)
-
-                    // keys.forEach((key) => {
-                    //     // @ts-ignore
-                    //     const keysInstruments = Object.keys(action.payload.records[key])
-                    //     keysInstruments.forEach((instrument) => {
-                    //         state.means.push({
-                    //             code: key,
-                    //             codeInstrument: instrument,
-                    //             // @ts-ignore
-                    //             name: action.payload.records[key][instrument]
-                    //         })
-                    //     })
-                    // })
                 }
             })
             .addCase(getMeans.rejected, (state) => {
+            })
+            // getMeansByDay
+            .addCase(getMeansByDay.pending, (state) => {
+            })
+            .addCase(getMeansByDay.fulfilled, (state, action) => {
+                if (action.payload.success) {
+
+                }
+            })
+            .addCase(getMeansByDay.rejected, (state) => {
             })
     }
 })

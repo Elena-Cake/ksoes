@@ -1,9 +1,13 @@
+// AUTH
 export type LoginFormValues = { username: string, password: string }
 
+// API
 export type TypesRecordsType = {
     id: number, name: string
 }
 
+
+// Observatory
 export type ObservatoryRecordsType = {
     [id: string]: string
 }
@@ -12,6 +16,14 @@ export type ObservatoryRecordsAppType = {
     name: string
 }
 
+export type ObservatoryRecordsDayType = {
+    count: number,
+    id_type: number,
+    id_observatory: number
+}
+
+
+// Means
 export type MeansRecordsType = {
     [id: string]: { [id: string]: string }
 }
@@ -20,7 +32,13 @@ export type MeansRecordsAppType = {
     codeInstrument: string
     name: string
 }
+export type MeansRecordsDayType = {
+    count: number,
+    id_type: number,
+    id_mean: number
+}
 
+// PrimeReact
 export type TreeTableType = {
     key: string | number,
     // @ts-ignore
@@ -29,4 +47,5 @@ export type TreeTableType = {
     icon: string,
     children?: TreeTableType[]
 }
+
 

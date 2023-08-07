@@ -5,9 +5,9 @@
 
 .main {
   display: grid;
-  grid-template-rows: 50px 20px 350px 350px;
 }
 
 .observatory {
+  height: 400px;
   overflow: scroll;
 }

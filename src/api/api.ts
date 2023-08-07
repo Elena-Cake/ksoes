@@ -1,5 +1,5 @@
 import axios from "axios"
-import { LoginFormValues, MeansRecordsType, ObservatoryRecordsType, TypesRecordsType } from "../types/types"
+import { LoginFormValues, MeansRecordsDayType, MeansRecordsType, ObservatoryRecordsDayType, ObservatoryRecordsType, TypesRecordsType } from "../types/types"
 
 const headers = () => {
     return {
@@ -62,6 +62,14 @@ export const api = {
                 return res.data
             })
     },
+
+    // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=observatory
+    getObservatoryByDay() {
+        return instance.get<DataResType<ObservatoryRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=observatory&${getToken()}`)
+            .then(res => {
+                return res.data
+            })
+    },
     // https://ares.ksoes.ru/api.php?act=upload_files&name=info&get=means
     getMeans() {
         return instance.get<DataResType<MeansRecordsType>>(`api.php?act=upload_files&name=info&get=means&${getToken()}`)
@@ -69,8 +77,14 @@ export const api = {
                 console.log('means', res.data)
                 return res.data
             })
-    }
-
-    // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=observatory
+    },
     // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=mean
+    getMeansByDay() {
+        return instance.get<DataResType<MeansRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+            .then(res => {
+                return res.data
+            })
+    },
+
+
 }
