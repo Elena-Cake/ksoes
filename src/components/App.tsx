@@ -97,9 +97,8 @@ function App() {
           <button onClick={() => handleGetTypes()}>types</button>
           <>{typesElements}</>
         </section>
-
+        <button style={{ 'width': '100px', 'margin': '0 auto' }}>observatory</button>
         <section className='observatory'>
-          <button onClick={() => handleGetTypes()}>observatory</button>
           <DataTable value={observatory} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="300px" >
             <Column field="code" header="Code"></Column>
             <Column field="name" header="Name"></Column>
@@ -107,14 +106,14 @@ function App() {
         </section>
 
         <section className='means'>
-          <button onClick={() => handleGetTypes()}>means</button>
+          <button >means</button>
           <TreeTable value={meansData} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="350px">
             <Column field="code" header="Code" expander style={{ minWidth: '100px' }}></Column>
             <Column field="name" header="Name" style={{ minWidth: '150px' }}></Column>
           </TreeTable>
         </section>
       </div>
-    </div>
+    </div >
   );
 }
 

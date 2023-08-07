@@ -5,7 +5,7 @@
 
 .main {
   display: grid;
-  grid-template-rows: 50px repeat(2, 350px);
+  grid-template-rows: 50px 20px 350px 350px;
 }
 
 .observatory {
