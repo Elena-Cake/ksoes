@@ -1,14 +1,13 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 import { LoginFormValues } from '../types/types'
-import { cleanData } from './dataSlice'
+import { cleanData, setIsPendingOff, setIsPendingOn } from './dataSlice'
 
 const initialState = {
     login: null as string | null,
     isAuth: false,
     token: '' as string | null,
-    error: null as string | null,
-    isPending: false
+    error: null as string | null
 }
 
 export const login = createAsyncThunk(
@@ -40,10 +39,10 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) => {
-                state.isPending = true
+                setIsPendingOn()
             })
             .addCase(login.fulfilled, (state, action) => {
-                state.isPending = false
+                setIsPendingOff()
                 if (action.payload.success && action.payload.getToken) {
                     state.error = null
                     localStorage.setItem('token', action.payload.getToken)
@@ -59,7 +58,7 @@ const authSlice = createSlice({
                 }
             })
             .addCase(login.rejected, (state) => {
-                state.isPending = false
+                setIsPendingOff()
                 state.error = 'Ошибка, попробуйте снова'
             })
     }

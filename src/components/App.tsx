@@ -1,20 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
 import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken } from '../store/authSlice';
 import Header from './Header/Header'; import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { getMeans, getMeansByDay, getObservatory, getObservatoryByDay, getTypes } from '../store/dataSlice';
+import { getMeans, getMeansByDay, getObservatory, getObservatoryByDay, getTypes, removeError } from '../store/dataSlice';
 import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
 import Types from './Types/Types';
 import Spinner from './Spinner/Spinner';
+import { Toast } from 'primereact/toast';
 
 function App() {
 
   const dispatch = useAppDispatch()
   const isAuth = useAppSelector(state => state.auth.isAuth)
-  const isPending = useAppSelector(s => s.auth.isPending)
+  const isPending = useAppSelector(s => s.dataSlice.isPending)
+
+  const toast = useRef<Toast>(null);
+  const error = useAppSelector(s => s.dataSlice.error)
+
+  useEffect(() => {
+    if (error) {
+      toast.current?.show({ severity: 'error', summary: 'Error', detail: error, life: 5000 });
+      dispatch(removeError())
+    }
+  }, [error])
 
   // проверка токена
   useEffect(() => {
@@ -33,8 +44,10 @@ function App() {
     }
   }, [isAuth])
 
+
   return (
     <div className="App">
+      <Toast ref={toast} />
       {isPending &&
         <Spinner />
       }
@@ -42,7 +55,6 @@ function App() {
       {!isAuth && <Login />}
       {isAuth &&
         <div className='main'>
-          <Types />
           <Observatory />
           <Means />
         </div>

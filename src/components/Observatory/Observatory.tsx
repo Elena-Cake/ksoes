@@ -5,26 +5,29 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 
 const Observatory: React.FC = () => {
-
+    const types = useAppSelector(s => s.dataSlice.types)
     const observatory = useAppSelector(s => s.dataSlice.observatory)
     const observatoruDay = useAppSelector(s => s.dataSlice.observatoryDay)
 
+    const dataTable = observatoruDay.map(data => {
+        return {
+            id: data.id_observatory,
+            name: observatory[data.id_observatory],
+            type: types.find(type => type.id === data.id_type)?.name,
+            count: data.count
+        }
+    })
+
     return (
         <section className='observatory'>
-            <h2>observatory</h2>
-            <div className='observatory_table'>
-                <DataTable value={observatory} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="300px" >
-                    <Column field="code" header="Code"></Column>
-                    <Column field="name" header="Name"></Column>
-                </DataTable>
-            </div>
             <h2 >observatory stat_day</h2>
             <div className="observatory_table_type_day">
 
-                <DataTable value={observatoruDay} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="200px" >
+                <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="70vh" >
+                    <Column field="id" header="Id Observatory"></Column>
+                    <Column field="name" header="Name"></Column>
+                    <Column field="type" header="Type"></Column>
                     <Column field="count" header="Count"></Column>
-                    <Column field="id_type" header="Id type"></Column>
-                    <Column field="id_observatory" header="Id observatory"></Column>
                 </DataTable>
             </div>
         </section>

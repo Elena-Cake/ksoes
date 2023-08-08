@@ -3,6 +3,7 @@
 }
 
 .means_table_type_day {
-    height: 400px;
+    grid-area: means;
+    max-height: 35vh;
     overflow: scroll;
 }

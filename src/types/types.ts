@@ -28,9 +28,9 @@ export type MeansRecordsType = {
     [id: string]: { [id: string]: string }
 }
 export type MeansRecordsAppType = {
-    code: string
-    codeInstrument: string
-    name: string
+    id_observatory: string,
+    id_mean: string,
+    name_mean: string
 }
 export type MeansRecordsDayType = {
     count: number,

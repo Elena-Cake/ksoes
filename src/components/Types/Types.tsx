@@ -8,7 +8,7 @@ const Types: React.FC = () => {
     const dispatch = useAppDispatch()
     const types = useAppSelector(s => s.dataSlice.types)
     const typesElements = <select>
-        {types.map(type => <option key={type.id}>{type.name}</option>)}
+        {types.map(type => <option key={type.id}>{type.id} - {type.name}</option>)}
     </select>
 
     const handleGetTypes = () => {

@@ -5,6 +5,7 @@
 }
 
 .observatory_table_type_day {
-    height: 400px;
+    grid-area: obs;
+    max-height: 35vh;
     overflow: scroll;
 }

@@ -57,12 +57,26 @@ export const api = {
     },
 
     // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=observatory
-    getObservatoryByDay() {
+    getObservatoryByStatDay() {
         return instance.get<DataResType<ObservatoryRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=observatory&${getToken()}`)
             .then(res => {
                 return res.data
             })
     },
+    getObservatoryByDay() {
+        return instance.get<DataResType<ObservatoryRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+            .then(res => {
+                return res.data
+            })
+    },
+    getObservatoryByDays() {
+        return instance.get<DataResType<ObservatoryRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+            .then(res => {
+                return res.data
+            })
+    },
+
+
     // https://ares.ksoes.ru/api.php?act=upload_files&name=info&get=means
     getMeans() {
         return instance.get<DataResType<MeansRecordsType>>(`api.php?act=upload_files&name=info&get=means&${getToken()}`)
@@ -71,12 +85,24 @@ export const api = {
             })
     },
     // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=mean
+    getMeansByStatDay() {
+        return instance.get<DataResType<MeansRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+            .then(res => {
+                return res.data
+            })
+    },
     getMeansByDay() {
         return instance.get<DataResType<MeansRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
             .then(res => {
                 return res.data
             })
     },
+    getMeansByDays() {
+        return instance.get<DataResType<MeansRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+            .then(res => {
+                return res.data
+            })
+    }
 
 
 }

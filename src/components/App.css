@@ -6,7 +6,5 @@
 .main {
   display: grid;
   grid-template-areas:
-    'types types'
-    'obs means';
-  grid-template-columns: repeat(2, 1fr);
+    'obs' ' means';
 }
