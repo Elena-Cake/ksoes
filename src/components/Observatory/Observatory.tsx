@@ -22,8 +22,8 @@ const Observatory: React.FC = () => {
 
     return (
         <section className='observatory'>
-            <h2 >observatory stat_day</h2>
-            <FormDates />
+            <p>Получить отчет по обсерваториям </p>
+            <FormDates error={null} onSend={() => { }} />
             <div className="observatory_table_type_day">
                 <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="70vh" >
                     <Column field="id" header="Id Observatory"></Column>

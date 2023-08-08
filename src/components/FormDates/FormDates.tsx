@@ -3,19 +3,19 @@ import './FormDates.scss';
 import { Button } from 'primereact/button';
 
 type PropsType = {
-
+    onSend: (date_start: string, date_end: string) => void,
+    error: string | null
 }
 
-const FormDates: React.FC<PropsType> = () => {
+const FormDates: React.FC<PropsType> = ({ onSend, error }) => {
     const [dateStart, setDateStart] = useState<string>('');
     const [dateEnd, setDateEnd] = useState<string>('');
 
 
     return (
         <div className="intervaldate">
-            <p>Получить отчет по обсерваториям </p>
             <div className="inputs__interval">
-                <p className="inputs__text">c</p>
+                <p className="inputs__text">от</p>
                 <input
                     className="inputs__date"
                     type="date"
@@ -32,7 +32,7 @@ const FormDates: React.FC<PropsType> = () => {
 
                 <Button label="Send" outlined style={{ 'padding': '5px 15px' }} severity="info" />
             </div>
-            {/* <span className={`inputs__error ${isErrorDate && "inputs__error_visible"}`}>{errorDateText}</span> */}
+            <span className={`inputs__error ${error && "inputs__error_visible"}`}>{error}</span>
         </div>
     )
 }

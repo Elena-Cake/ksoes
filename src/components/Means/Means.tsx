@@ -5,6 +5,7 @@ import { TreeTableType } from "../../types/types";
 import { TreeTable } from "primereact/treetable";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import FormDates from "../FormDates/FormDates";
 
 const Means: React.FC = () => {
 
@@ -27,8 +28,8 @@ const Means: React.FC = () => {
 
     return (
         <section className='means'>
-
-            <h2 >means stat_day</h2>
+            <p>Получить отчет по средствам </p>
+            <FormDates error={null} onSend={() => { }} />
             <div className="means_table_type_day">
                 <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="70vh" >
                     <Column field="name_observatory" header="Observatory"></Column>
