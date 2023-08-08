@@ -8,11 +8,13 @@ import { getMeans, getMeansByDay, getObservatory, getObservatoryByDay, getTypes 
 import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
 import Types from './Types/Types';
+import Spinner from './Spinner/Spinner';
 
 function App() {
 
   const dispatch = useAppDispatch()
   const isAuth = useAppSelector(state => state.auth.isAuth)
+  const isPending = useAppSelector(s => s.auth.isPending)
 
   // проверка токена
   useEffect(() => {
@@ -33,6 +35,9 @@ function App() {
 
   return (
     <div className="App">
+      {isPending &&
+        <Spinner />
+      }
       <Header />
       {!isAuth && <Login />}
       {isAuth &&

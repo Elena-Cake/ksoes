@@ -57,7 +57,6 @@ const dataSlice = createSlice({
                 types: [] as TypesRecordsType[],
                 observatory: [] as ObservatoryRecordsAppType[],
                 observatoryDay: [] as ObservatoryRecordsDayType[],
-                // means: [] as MeansRecordsAppType[]
                 means: [] as MeansRecordsType[],
                 meansDay: [] as MeansRecordsDayType[]
             }

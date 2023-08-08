@@ -7,7 +7,8 @@ const initialState = {
     login: null as string | null,
     isAuth: false,
     token: '' as string | null,
-    error: null as string | null
+    error: null as string | null,
+    isPending: false
 }
 
 export const login = createAsyncThunk(
@@ -39,21 +40,27 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) => {
+                state.isPending = true
             })
             .addCase(login.fulfilled, (state, action) => {
-
-                if (action.payload.getToken) {
+                state.isPending = false
+                if (action.payload.success && action.payload.getToken) {
                     state.error = null
                     localStorage.setItem('token', action.payload.getToken)
                     state.isAuth = true
                 } else {
-                    if (action.payload.error) {
-                        state.error = action.payload.error
+                    if (action.payload.error === 'Invalid login or password') {
+                        state.error = 'Неверный логин или пароль'
                         state.login = null
+                    } else {
+                        state.error = 'Ошибка, попробуйте снова'
                     }
+
                 }
             })
             .addCase(login.rejected, (state) => {
+                state.isPending = false
+                state.error = 'Ошибка, попробуйте снова'
             })
     }
 })
