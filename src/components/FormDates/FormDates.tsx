@@ -13,6 +13,7 @@ const FormDates: React.FC<PropsType> = () => {
 
     return (
         <div className="intervaldate">
+            <p>Получить отчет по обсерваториям </p>
             <div className="inputs__interval">
                 <p className="inputs__text">c</p>
                 <input
