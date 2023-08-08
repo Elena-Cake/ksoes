@@ -36,7 +36,6 @@ export const api = {
     login(formValues: LoginFormValues) {
         return instance.get<LoginResType>(`_authorization.php?username=${formValues.username}&password=${formValues.password}&func=getToken`)
             .then(res => {
-                console.log(res)
                 if (res.data.result) return res.data.result
                 return res.data
             })
@@ -53,7 +52,6 @@ export const api = {
     getObservatory() {
         return instance.get<DataResType<ObservatoryRecordsType>>(`api.php?act=upload_files&name=info&get=observatory&${getToken()}`)
             .then(res => {
-                console.log('observatory', res.data)
                 return res.data
             })
     },
@@ -69,7 +67,6 @@ export const api = {
     getMeans() {
         return instance.get<DataResType<MeansRecordsType>>(`api.php?act=upload_files&name=info&get=means&${getToken()}`)
             .then(res => {
-                console.log('means', res.data)
                 return res.data
             })
     },

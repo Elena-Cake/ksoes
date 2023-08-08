@@ -4,10 +4,12 @@ import { useAppSelector } from "../../store/store";
 import { TreeTableType } from "../../types/types";
 import { TreeTable } from "primereact/treetable";
 import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
 
 const Means: React.FC = () => {
     const means = useAppSelector(s => s.dataSlice.means)
-    console.log('means app', means)
+    const meansDay = useAppSelector(s => s.dataSlice.meansDay)
+
     const meansKeys = Object.keys(means)
     const meansData = [] as TreeTableType[]
 
@@ -57,10 +59,19 @@ const Means: React.FC = () => {
     return (
         <section className='means'>
             <h2 >means</h2>
-            <TreeTable value={meansData} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="350px">
+            <TreeTable value={meansData} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="300px">
                 <Column field="code" header="Code" expander style={{ minWidth: '200px' }}></Column>
                 <Column field="name" header="Name" style={{ minWidth: '500px' }}></Column>
             </TreeTable>
+
+            <h2 >means stat_day</h2>
+            <div className="means_table_type_day">
+                <DataTable value={meansDay} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="200px" >
+                    <Column field="count" header="Count"></Column>
+                    <Column field="id_type" header="Id type"></Column>
+                    <Column field="id_mean" header="Id mean"></Column>
+                </DataTable>
+            </div>
         </section>
     )
 }

@@ -52,8 +52,15 @@ const dataSlice = createSlice({
     initialState,
     reducers: {
         // lists
-        addTodoList(state, action: PayloadAction<{ title: string }>) {
-
+        cleanData(state) {
+            state = {
+                types: [] as TypesRecordsType[],
+                observatory: [] as ObservatoryRecordsAppType[],
+                observatoryDay: [] as ObservatoryRecordsDayType[],
+                // means: [] as MeansRecordsAppType[]
+                means: [] as MeansRecordsType[],
+                meansDay: [] as MeansRecordsDayType[]
+            }
         },
     },
     extraReducers: (builder) => {
@@ -87,7 +94,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
-
+                    state.observatoryDay = action.payload.records
                 }
             })
             .addCase(getObservatoryByDay.rejected, (state) => {
@@ -107,14 +114,13 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
-
+                    state.meansDay = action.payload.records
                 }
             })
             .addCase(getMeansByDay.rejected, (state) => {
             })
     }
 })
-export const {
-} = dataSlice.actions
+export const { cleanData } = dataSlice.actions
 export default dataSlice.reducer
 

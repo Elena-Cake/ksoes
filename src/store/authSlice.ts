@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 import { LoginFormValues } from '../types/types'
+import { cleanData } from './dataSlice'
 
 const initialState = {
     login: null as string | null,
@@ -29,6 +30,7 @@ const authSlice = createSlice({
             state.isAuth = false
             state.login = null
             localStorage.removeItem('token')
+            cleanData()
         },
         setUserName(state, action: PayloadAction<{ userName: string }>) {
             state.login = action.payload.userName

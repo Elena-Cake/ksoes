@@ -4,7 +4,7 @@ import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken } from '../store/authSlice';
 import Header from './Header/Header'; import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { getMeans, getObservatory, getTypes } from '../store/dataSlice';
+import { getMeans, getMeansByDay, getObservatory, getObservatoryByDay, getTypes } from '../store/dataSlice';
 import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
 import Types from './Types/Types';
@@ -22,8 +22,12 @@ function App() {
   useEffect(() => {
     if (isAuth) {
       dispatch(getTypes())
+
       dispatch(getObservatory())
+      dispatch(getObservatoryByDay())
+
       dispatch(getMeans())
+      dispatch(getMeansByDay())
     }
   }, [isAuth])
 

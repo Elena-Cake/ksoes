@@ -1,5 +1,10 @@
 .observatory_table {
     grid-area: obs;
+    height: 350px;
+    overflow: scroll;
+}
+
+.observatory_table_type_day {
     height: 400px;
     overflow: scroll;
 }
