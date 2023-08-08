@@ -1,0 +1,40 @@
+.intervaldate {
+    align-items: center;
+    grid-area: date;
+    position: relative;
+}
+
+.inputs__error {
+    color: #fd0000;
+    font-size: 14px;
+    padding: 2px 5px 5px;
+    border-bottom: 2px solid #fd00003f;
+    position: absolute;
+    right: 10px;
+    bottom: -15px;
+    display: none;
+}
+
+.inputs__error_visible {
+    display: block;
+}
+
+
+.inputs__date {
+    width: 150px;
+    padding: 5px;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.514);
+}
+
+.inputs__text {
+    margin: 5px;
+}
+
+.inputs__interval {
+    display: flex;
+    margin: 10px 0;
+    grid-area: date;
+    gap: 10px;
+    height: 35px;
+}
