@@ -17,7 +17,8 @@ const Types: React.FC = () => {
 
     return (
         <section className='types'>
-            <button onClick={() => handleGetTypes()}>types</button>
+            <h2>types</h2>
+            {/* <button onClick={() => handleGetTypes()}>types</button> */}
             <>{typesElements}</>
         </section>
     )

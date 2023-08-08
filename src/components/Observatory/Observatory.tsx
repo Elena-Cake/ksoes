@@ -10,9 +10,9 @@ const Observatory: React.FC = () => {
 
     return (
         <section className='observatory'>
-            <button style={{ 'width': '100px', 'margin': '0 auto' }}>observatory</button>
+            <h2>observatory</h2>
             <div className='observatory_table'>
-                <DataTable value={observatory} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="300px" >
+                <DataTable value={observatory} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="300px" >
                     <Column field="code" header="Code"></Column>
                     <Column field="name" header="Name"></Column>
                 </DataTable>

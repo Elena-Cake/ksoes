@@ -56,10 +56,10 @@ const Means: React.FC = () => {
 
     return (
         <section className='means'>
-            <button >means</button>
-            <TreeTable value={meansData} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="350px">
+            <h2 >means</h2>
+            <TreeTable value={meansData} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="350px">
                 <Column field="code" header="Code" expander style={{ minWidth: '200px' }}></Column>
-                <Column field="name" header="Name" style={{ minWidth: '150px' }}></Column>
+                <Column field="name" header="Name" style={{ minWidth: '500px' }}></Column>
             </TreeTable>
         </section>
     )
