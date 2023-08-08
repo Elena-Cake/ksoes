@@ -1,11 +1,6 @@
 import axios from "axios"
 import { LoginFormValues, MeansRecordsDayType, MeansRecordsType, ObservatoryRecordsDayType, ObservatoryRecordsType, TypesRecordsType } from "../types/types"
 
-const headers = () => {
-    return {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-}
 const getToken = () => `token=${localStorage.getItem('token')}`
 
 const instance = axios.create({
