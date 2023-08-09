@@ -49,3 +49,8 @@ export type TreeTableType = {
 }
 
 
+export type dateFormValues = {
+    date_start: string,
+    date_end?: string,
+}
+

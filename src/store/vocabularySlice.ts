@@ -3,6 +3,7 @@ import { api } from '../api/api'
 import { MeansRecordsAppType, ObservatoryRecordsType, TypesRecordsType } from '../types/types'
 import { removeError, setNetworkError } from './appSlice'
 import { useAppDispatch } from './store'
+import { apiVocabulary } from '../api/vocabulary'
 
 const initialState = {
     types: [] as TypesRecordsType[],
@@ -13,21 +14,21 @@ const initialState = {
 export const getTypes = createAsyncThunk(
     'data/types',
     async () => {
-        const response = await api.getTypes()
+        const response = await apiVocabulary.getTypes()
         return response
     }
 )
 export const getObservatory = createAsyncThunk(
     'data/observatory',
     async () => {
-        const response = await api.getObservatory()
+        const response = await apiVocabulary.getObservatory()
         return response
     }
 )
 export const getMeans = createAsyncThunk(
     'data/means',
     async () => {
-        const response = await api.getMeans()
+        const response = await apiVocabulary.getMeans()
         return response
     }
 )
@@ -49,12 +50,11 @@ const vocabularySlice = createSlice({
             state.types = JSON.parse(catalogTypes) || []
 
             const catalogObservatory = localStorage.getItem('catalogObservatory') || ''
-            state.types = JSON.parse(catalogObservatory) || []
+            state.observatory = JSON.parse(catalogObservatory) || []
 
             const catalogMeans = localStorage.getItem('catalogMeans') || ''
-            state.types = JSON.parse(catalogMeans) || []
+            state.means = JSON.parse(catalogMeans) || []
         }
-
     },
     extraReducers: (builder) => {
         builder

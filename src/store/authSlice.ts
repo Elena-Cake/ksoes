@@ -4,6 +4,7 @@ import { LoginFormValues } from '../types/types'
 import { cleanData } from './dataSlice'
 import { cleanVocabulary } from './vocabularySlice'
 import { setIsPendingOff, setIsPendingOn } from './appSlice'
+import { apiAuth } from '../api/auth'
 
 const initialState = {
     login: null as string | null,
@@ -15,7 +16,7 @@ const initialState = {
 export const login = createAsyncThunk(
     'auth/login',
     async (formValues: LoginFormValues, { rejectWithValue }) => {
-        const response = await api.login(formValues)
+        const response = await apiAuth.login(formValues)
         return response
     }
 )

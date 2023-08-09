@@ -1,12 +1,13 @@
 import React from "react";
 import './Means.scss';
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import FormDates from "../FormDates/FormDates";
+import { getMeansByDay, getMeansByDays } from "../../store/dataSlice";
 
 const Means: React.FC = () => {
-
+    const dispatch = useAppDispatch()
     const types = useAppSelector(s => s.vocabularySlice.types)
     // const observatory = useAppSelector(s => s.dataSlice.observatory)
     const means = useAppSelector(s => s.vocabularySlice.means)
@@ -24,10 +25,18 @@ const Means: React.FC = () => {
         }
     })
 
+    const getReport = (date_start: string, date_end?: string) => {
+        if (date_end) {
+            dispatch(getMeansByDays({ date_start, date_end }))
+        } else {
+            dispatch(getMeansByDay({ date_start }))
+        }
+    }
+
     return (
         <section className='means'>
             <p>Получить отчет по средствам </p>
-            <FormDates error={null} onSend={() => { }} />
+            <FormDates apiError={null} onSend={getReport} />
             <div className="means_table_type_day">
                 <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="70vh" >
                     <Column field="name_observatory" header="Observatory"></Column>

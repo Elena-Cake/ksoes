@@ -1,16 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import './App.css';
 import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken } from '../store/authSlice';
-import Header from './Header/Header'; import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { getMeansByDay, getObservatoryByDay } from '../store/dataSlice';
+import Header from './Header/Header';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { getMeansByDay, getMeansByStatDay, getObservatoryByDay, getObservatoryByStatDay } from '../store/dataSlice';
 import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
 import Spinner from './Spinner/Spinner';
 import { Toast } from 'primereact/toast';
 import { removeError } from '../store/appSlice';
-import { getMeans, getObservatory, getTypes, setCatalogs } from '../store/vocabularySlice';
+import { getMeans, getObservatory, getTypes } from '../store/vocabularySlice';
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
 
   const toast = useRef<Toast>(null);
   const error = useAppSelector(s => s.appSlice.error)
+
+  const means = useAppSelector(s => s.vocabularySlice.means)
 
   useEffect(() => {
     if (error) {
@@ -35,15 +38,15 @@ function App() {
 
   useEffect(() => {
     if (isAuth) {
-      if (localStorage.getItem('catalogTypes')) {
-        dispatch(setCatalogs())
-      } else {
-        dispatch(getTypes())
-        dispatch(getObservatory())
-        dispatch(getMeans())
-      }
-      dispatch(getObservatoryByDay())
-      dispatch(getMeansByDay())
+      // if (localStorage.getItem('catalogTypes')) {
+      //   dispatch(setCatalogs())
+      // } else {
+      dispatch(getTypes())
+      dispatch(getObservatory())
+      dispatch(getMeans())
+      // }
+      dispatch(getObservatoryByStatDay())
+      dispatch(getMeansByStatDay())
     }
   }, [isAuth])
 

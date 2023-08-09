@@ -3,18 +3,39 @@ import './FormDates.scss';
 import { Button } from 'primereact/button';
 
 type PropsType = {
-    onSend: (date_start: string, date_end: string) => void,
-    error: string | null
+    onSend: (date_start: string, date_end?: string) => void,
+    apiError: string | null
 }
 
-const FormDates: React.FC<PropsType> = ({ onSend, error }) => {
+const FormDates: React.FC<PropsType> = ({ onSend, apiError }) => {
     const [dateStart, setDateStart] = useState<string>('');
     const [dateEnd, setDateEnd] = useState<string>('');
 
+    const [error, setError] = useState(null as string | null)
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setError(null)
+        if (dateStart !== '' && dateEnd !== '') {
+            const start = new Date(dateStart)
+            const end = new Date(dateEnd)
+            if (start < end) {
+                onSend(dateStart, dateEnd)
+            } else {
+                setError('Интервал дат некорректен')
+            }
+        } else if (dateStart !== '' || dateEnd !== '') {
+            const date = dateStart !== '' ? dateStart : dateEnd
+            onSend(date)
+        } else {
+            setError('Укажите дату(ы)')
+        }
+
+    }
 
     return (
         <div className="intervaldate">
-            <div className="inputs__interval">
+            <form className="inputs__interval" onSubmit={(e) => handleSubmit(e)}>
                 <p className="inputs__text">от</p>
                 <input
                     className="inputs__date"
@@ -30,8 +51,8 @@ const FormDates: React.FC<PropsType> = ({ onSend, error }) => {
                     onChange={(e) => setDateEnd(e.target.value)}
                     value={dateEnd || ''} />
 
-                <Button label="Send" outlined style={{ 'padding': '5px 15px' }} severity="info" />
-            </div>
+                <Button label="Получить" outlined style={{ 'padding': '5px 15px' }} severity="info" />
+            </form>
             <span className={`inputs__error ${error && "inputs__error_visible"}`}>{error}</span>
         </div>
     )

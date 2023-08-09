@@ -1,5 +1,5 @@
 import axios from "axios"
-import { LoginFormValues, MeansRecordsDayType, MeansRecordsType, ObservatoryRecordsDayType, ObservatoryRecordsType, TypesRecordsType } from "../types/types"
+import { MeansRecordsDayType, ObservatoryRecordsDayType, dateFormValues } from "../types/types"
 
 const getToken = () => `token=${localStorage.getItem('token')}`
 
@@ -7,20 +7,8 @@ const instance = axios.create({
     baseURL: 'https://ares.ksoes.ru/',
     withCredentials: true,
 })
+const BASE_API = 'api.php?name=group&act=upload_files&get=stat_day'
 
-type LoginResResType = {
-    success: boolean | 0 | 1
-    error: string | null
-    message: string | null
-    getToken?: string
-}
-type LoginResType = {
-    result?: LoginResResType
-    success?: boolean | 0 | 1
-    error?: string | null
-    message?: string | null
-    getToken?: string | null
-}
 
 type DataResType<R> = {
     debug: string
@@ -32,73 +20,47 @@ type DataResType<R> = {
 
 export const api = {
 
-    // https://ares.ksoes.ru/_authorization.php?username=test&password=test&func=getToken
-    login(formValues: LoginFormValues) {
-        return instance.get<LoginResType>(`_authorization.php?username=${formValues.username}&password=${formValues.password}&func=getToken`)
-            .then(res => {
-                if (res.data.result) return res.data.result
-                return res.data
-            })
-    },
-
-    // https://ares.ksoes.ru/api.php?act=upload_files&name=info&get=types
-    getTypes() {
-        return instance.get<DataResType<TypesRecordsType>>(`api.php?act=upload_files&name=info&get=types&${getToken()}`)
-            .then(res => {
-                return res.data
-            })
-    },
-    // https://ares.ksoes.ru/api.php?act=upload_files&name=info&get=observatory
-    getObservatory() {
-        return instance.get<DataResType<ObservatoryRecordsType>>(`api.php?act=upload_files&name=info&get=observatory&${getToken()}`)
-            .then(res => {
-                return res.data
-            })
-    },
-
     // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=observatory
     getObservatoryByStatDay() {
-        return instance.get<DataResType<ObservatoryRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=observatory&${getToken()}`)
+        return instance.get<DataResType<ObservatoryRecordsDayType>>(`${BASE_API}&group=observatory&${getToken()}`)
             .then(res => {
                 return res.data
             })
     },
-    getObservatoryByDay() {
-        return instance.get<DataResType<ObservatoryRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+    // https://ares.ksoes.ru/api.php?name=group&act=upload_files&get=stat_day&group=observatory&date_end=2023-08-01&date_start=2023-07-29
+    getObservatoryByDay(formValues: dateFormValues) {
+        const { date_start } = formValues
+        return instance.get<DataResType<ObservatoryRecordsDayType>>(`${BASE_API}&group=observatory&date_end=${date_start}&${getToken()}`)
             .then(res => {
                 return res.data
             })
     },
-    getObservatoryByDays() {
-        return instance.get<DataResType<ObservatoryRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+    getObservatoryByDays(formValues: dateFormValues) {
+        const { date_start, date_end } = formValues
+        return instance.get<DataResType<ObservatoryRecordsDayType>>(`${BASE_API}&group=observatory&date_start=${date_start}&date_end=${date_end}&${getToken()}`)
             .then(res => {
                 return res.data
             })
     },
 
-
-    // https://ares.ksoes.ru/api.php?act=upload_files&name=info&get=means
-    getMeans() {
-        return instance.get<DataResType<MeansRecordsType>>(`api.php?act=upload_files&name=info&get=means&${getToken()}`)
-            .then(res => {
-                return res.data
-            })
-    },
     // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=mean
     getMeansByStatDay() {
-        return instance.get<DataResType<MeansRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+        return instance.get<DataResType<MeansRecordsDayType>>(`${BASE_API}&group=mean&${getToken()}`)
             .then(res => {
                 return res.data
             })
     },
-    getMeansByDay() {
-        return instance.get<DataResType<MeansRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+    // https://ares.ksoes.ru/api.php?name=group&act=upload_files&get=stat_day&group=mean&date_end=2023-08-01&date_start=2023-07-29
+    getMeansByDay(formValues: dateFormValues) {
+        const { date_start } = formValues
+        return instance.get<DataResType<MeansRecordsDayType>>(`${BASE_API}&group=mean&date_end=${date_start}&${getToken()}`)
             .then(res => {
                 return res.data
             })
     },
-    getMeansByDays() {
-        return instance.get<DataResType<MeansRecordsDayType>>(`api.php?act=upload_files&name=group&get=stat_day&group=mean&${getToken()}`)
+    getMeansByDays(formValues: dateFormValues) {
+        const { date_start, date_end } = formValues
+        return instance.get<DataResType<MeansRecordsDayType>>(`${BASE_API}&group=mean&date_start=${date_start}&date_end=${date_end}&${getToken()}`)
             .then(res => {
                 return res.data
             })
