@@ -6,10 +6,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
+import vocabularySlice from "./vocabularySlice"
+import appSlice from "./appSlice"
 
 const rootReducer = combineReducers({
     auth: authSlice,
-    dataSlice: dataSlice,
+    appSlice: appSlice,
+    vocabularySlice: vocabularySlice,
+    dataSlice: dataSlice
 });
 
 const store = configureStore({ reducer: rootReducer })

@@ -1,7 +1,9 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 import { LoginFormValues } from '../types/types'
-import { cleanData, setIsPendingOff, setIsPendingOn } from './dataSlice'
+import { cleanData } from './dataSlice'
+import { cleanVocabulary } from './vocabularySlice'
+import { setIsPendingOff, setIsPendingOn } from './appSlice'
 
 const initialState = {
     login: null as string | null,
@@ -31,6 +33,7 @@ const authSlice = createSlice({
             state.login = null
             localStorage.removeItem('token')
             cleanData()
+            cleanVocabulary()
         },
         setUserName(state, action: PayloadAction<{ userName: string }>) {
             state.login = action.payload.userName

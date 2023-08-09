@@ -4,21 +4,23 @@ import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken } from '../store/authSlice';
 import Header from './Header/Header'; import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { getMeans, getMeansByDay, getObservatory, getObservatoryByDay, getTypes, removeError } from '../store/dataSlice';
+import { getMeansByDay, getObservatoryByDay } from '../store/dataSlice';
 import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
 import Types from './Types/Types';
 import Spinner from './Spinner/Spinner';
 import { Toast } from 'primereact/toast';
+import { removeError } from '../store/appSlice';
+import { getMeans, getObservatory, getTypes } from '../store/vocabularySlice';
 
 function App() {
 
   const dispatch = useAppDispatch()
   const isAuth = useAppSelector(state => state.auth.isAuth)
-  const isPending = useAppSelector(s => s.dataSlice.isPending)
+  const isPending = useAppSelector(s => s.appSlice.isPending)
 
   const toast = useRef<Toast>(null);
-  const error = useAppSelector(s => s.dataSlice.error)
+  const error = useAppSelector(s => s.appSlice.error)
 
   useEffect(() => {
     if (error) {

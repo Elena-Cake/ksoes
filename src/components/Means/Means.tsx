@@ -9,9 +9,9 @@ import FormDates from "../FormDates/FormDates";
 
 const Means: React.FC = () => {
 
-    const types = useAppSelector(s => s.dataSlice.types)
+    const types = useAppSelector(s => s.vocabularySlice.types)
     // const observatory = useAppSelector(s => s.dataSlice.observatory)
-    const means = useAppSelector(s => s.dataSlice.means)
+    const means = useAppSelector(s => s.vocabularySlice.means)
     const meansDay = useAppSelector(s => s.dataSlice.meansDay)
 
     const dataTable = meansDay.map(data => {

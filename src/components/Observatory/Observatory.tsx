@@ -6,8 +6,8 @@ import { DataTable } from "primereact/datatable";
 import FormDates from "../FormDates/FormDates";
 
 const Observatory: React.FC = () => {
-    const types = useAppSelector(s => s.dataSlice.types)
-    const observatory = useAppSelector(s => s.dataSlice.observatory)
+    const types = useAppSelector(s => s.vocabularySlice.types)
+    const observatory = useAppSelector(s => s.vocabularySlice.observatory)
     const observatoruDay = useAppSelector(s => s.dataSlice.observatoryDay)
 
     const dataTable = observatoruDay.map(data => {
