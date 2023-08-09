@@ -1,9 +1,8 @@
-import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
-import { MeansRecordsAppType, MeansRecordsDayType, MeansRecordsType, ObservatoryRecordsAppType, ObservatoryRecordsDayType, ObservatoryRecordsType, TypesRecordsType } from '../types/types'
+import { MeansRecordsDayType, ObservatoryRecordsDayType } from '../types/types'
 import { setNetworkError } from './appSlice'
 
-const ERROR_NETWORK = 'Проверьте интернет соединение'
 const initialState = {
     observatoryDay: [] as ObservatoryRecordsDayType[],
     meansDay: [] as MeansRecordsDayType[]

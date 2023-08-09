@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
-import { MeansRecordsAppType, MeansRecordsDayType, MeansRecordsType, ObservatoryRecordsAppType, ObservatoryRecordsDayType, ObservatoryRecordsType, TypesRecordsType } from '../types/types'
+import { MeansRecordsAppType, ObservatoryRecordsType, TypesRecordsType } from '../types/types'
 import { removeError, setNetworkError } from './appSlice'
 
 const initialState = {
@@ -78,10 +78,10 @@ const vocabularySlice = createSlice({
                 if (action.payload.success) {
                     const id_observatory = Object.keys(action.payload.records)
                     const means = [] as MeansRecordsAppType[]
-                    id_observatory.map((id) => {
+                    id_observatory.forEach((id) => {
                         // @ts-ignore
                         const id_means = Object.keys(action.payload.records[id])
-                        id_means.map(id_mean => {
+                        id_means.forEach(id_mean => {
                             means.push({
                                 id_observatory: id,
                                 id_mean: id_mean,

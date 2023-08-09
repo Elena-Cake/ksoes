@@ -1,6 +1,4 @@
-import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { api } from '../api/api'
-import { MeansRecordsAppType, MeansRecordsDayType, MeansRecordsType, ObservatoryRecordsAppType, ObservatoryRecordsDayType, ObservatoryRecordsType, TypesRecordsType } from '../types/types'
+import { createSlice } from '@reduxjs/toolkit'
 
 const ERROR_NETWORK = 'Проверьте интернет соединение'
 const initialState = {
