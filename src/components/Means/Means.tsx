@@ -35,7 +35,7 @@ const Means: React.FC = () => {
 
     return (
         <section className='means'>
-            <p>Получить отчет по средствам </p>
+            <p className="means__title">Получить отчет по средствам </p>
             <FormDates apiError={null} onSend={getReport} />
             <div className="means_table_type_day">
                 <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="70vh" >

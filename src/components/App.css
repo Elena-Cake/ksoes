@@ -7,4 +7,8 @@
   display: grid;
   grid-template-areas:
     'obs' ' means';
+  grid-template-rows: repeat(2, minmax(350px, 43vh));
+  width: 1400px;
+  max-width: 96%;
+  margin: 0 auto;
 }

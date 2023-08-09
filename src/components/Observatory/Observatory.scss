@@ -1,5 +1,13 @@
+@import './../default_variables.scss';
+
 .observatory_table_type_day {
     grid-area: obs;
-    max-height: 35vh;
+    max-height: 33vh;
     overflow: scroll;
+}
+
+.observatory__title {
+    @extend .font-h2;
+    text-align: left;
+    margin: 15px 0;
 }

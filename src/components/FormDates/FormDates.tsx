@@ -13,12 +13,21 @@ const FormDates: React.FC<PropsType> = ({ onSend, apiError }) => {
 
     const [error, setError] = useState(null as string | null)
 
+    const isDateInFuture = (date: Date) => {
+        const now = new Date()
+        return date.getDate() > now.getDate() + 1 ? false : true
+    }
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setError(null)
         if (dateStart !== '' && dateEnd !== '') {
             const start = new Date(dateStart)
             const end = new Date(dateEnd)
+            if (isDateInFuture(start)) {
+                setError('Интервал дат некорректен')
+                return
+            }
             if (start < end) {
                 onSend(dateStart, dateEnd)
             } else {
@@ -26,6 +35,10 @@ const FormDates: React.FC<PropsType> = ({ onSend, apiError }) => {
             }
         } else if (dateStart !== '' || dateEnd !== '') {
             const date = dateStart !== '' ? dateStart : dateEnd
+            if (isDateInFuture(new Date(date))) {
+                setError('Введите корректную дату')
+                return
+            }
             onSend(date)
         } else {
             setError('Укажите дату(ы)')
