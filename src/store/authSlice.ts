@@ -42,10 +42,9 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) => {
-                setIsPendingOn()
+
             })
             .addCase(login.fulfilled, (state, action) => {
-                setIsPendingOff()
                 if (action.payload.success && action.payload.getToken) {
                     state.error = null
                     localStorage.setItem('token', action.payload.getToken)
@@ -61,7 +60,6 @@ const authSlice = createSlice({
                 }
             })
             .addCase(login.rejected, (state) => {
-                setIsPendingOff()
                 state.error = 'Ошибка, попробуйте снова'
             })
     }

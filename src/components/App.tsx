@@ -26,7 +26,7 @@ function App() {
   const DataError = useAppSelector(s => s.dataSlice.error)
 
   // toast
-  const [isVisibleToast, setIsVisibleToast] = useState(true)
+  const [isVisibleToast, setIsVisibleToast] = useState(false)
   const [toastSettings, setToastSettings] = useState({ isError: true, message: '' })
 
   const closeToast = () => {

@@ -15,7 +15,7 @@ const FormDates: React.FC<PropsType> = ({ onSend, apiError }) => {
 
     const isDateInFuture = (date: Date) => {
         const now = new Date()
-        return date.getDate() > now.getDate() + 1 ? false : true
+        return date > now
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

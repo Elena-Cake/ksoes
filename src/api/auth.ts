@@ -25,10 +25,12 @@ export const apiAuth = {
 
     // https://ares.ksoes.ru/_authorization.php?username=test&password=test&func=getToken
     login(formValues: LoginFormValues) {
+        debugger
         return instance.get<LoginResType>(`_authorization.php?username=${formValues.username}&password=${formValues.password}&func=getToken`)
             .then(res => {
                 if (res.data.result) return res.data.result
                 return res.data
             })
+
     }
 }

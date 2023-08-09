@@ -76,7 +76,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByStatDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
-                    state.observatoryDay = action.payload.records
+                    state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
             .addCase(getObservatoryByStatDay.rejected, (state) => {
@@ -88,7 +88,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
-                    state.observatoryDay = action.payload.records
+                    state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
             .addCase(getObservatoryByDay.rejected, (state) => {
@@ -99,7 +99,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByDays.fulfilled, (state, action) => {
                 if (action.payload.success) {
-                    state.observatoryDay = action.payload.records
+                    state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
             .addCase(getObservatoryByDays.rejected, (state) => {
@@ -112,7 +112,8 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByStatDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
-                    state.meansDay = action.payload.records
+                    // state.meansDay = action.payload.records
+                    state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
             .addCase(getMeansByStatDay.rejected, (state) => {
@@ -123,7 +124,7 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
-                    state.meansDay = action.payload.records
+                    state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
             .addCase(getMeansByDay.rejected, (state) => {
@@ -134,7 +135,7 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByDays.fulfilled, (state, action) => {
                 if (action.payload.success) {
-                    state.meansDay = action.payload.records
+                    state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
             .addCase(getMeansByDays.rejected, (state) => {

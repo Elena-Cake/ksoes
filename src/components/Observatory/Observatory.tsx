@@ -36,7 +36,7 @@ const Observatory: React.FC = () => {
             <p className="observatory__title">Получить отчет по обсерваториям </p>
             <FormDates apiError={null} onSend={getReport} />
             <div className="observatory_table_type_day">
-                <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="70vh" >
+                <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="800px">
                     <Column field="id" header="Id Observatory"></Column>
                     <Column field="name" header="Name"></Column>
                     <Column field="type" header="Type"></Column>
