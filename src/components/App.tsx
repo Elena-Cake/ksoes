@@ -7,7 +7,6 @@ import Header from './Header/Header'; import "primereact/resources/themes/lara-l
 import { getMeansByDay, getObservatoryByDay } from '../store/dataSlice';
 import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
-import Types from './Types/Types';
 import Spinner from './Spinner/Spinner';
 import { Toast } from 'primereact/toast';
 import { removeError } from '../store/appSlice';

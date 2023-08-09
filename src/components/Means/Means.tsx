@@ -1,8 +1,6 @@
 import React from "react";
 import './Means.scss';
 import { useAppSelector } from "../../store/store";
-import { TreeTableType } from "../../types/types";
-import { TreeTable } from "primereact/treetable";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import FormDates from "../FormDates/FormDates";
