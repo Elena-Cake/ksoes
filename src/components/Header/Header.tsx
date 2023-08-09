@@ -13,7 +13,7 @@ const Header: React.FC = () => {
         <header className="header">
             <span className="header__name">{userName}</span>
             {isAuth &&
-                <Button icon="pi pi-times" label="Выйти" iconPos="right"
+                <Button icon="pi pi-times" label="Выйти"
                     text raised
                     className="header__logout" onClick={() => { dispatch(logout()) }}
                     style={{ 'padding': '5px', 'color': '#fff' }}

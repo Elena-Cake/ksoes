@@ -75,15 +75,16 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={() => dispatch(setNetworkError())}>x</button>
+      {/* <button onClick={() => dispatch(setNetworkError())}>x</button> */}
       {/* <Toast ref={toast} /> */}
-      <MyToast isVisible={isVisibleToast} values={toastSettings} closeToast={closeToast} />
+      < MyToast isVisible={isVisibleToast} values={toastSettings} closeToast={closeToast} />
       {isPending &&
         <Spinner />
       }
       <Header />
       {!isAuth && <Login />}
-      {isAuth &&
+      {
+        isAuth &&
         <div className='main'>
           <Observatory />
           <Means />
