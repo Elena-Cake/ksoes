@@ -1,6 +1,48 @@
+@import './../default_variables.scss';
+
 .toast {
     position: absolute;
     top: 2vh;
     right: 1%;
-    min-width: 200px;
+}
+
+.toast__container {
+    min-width: 250px;
+    min-height: 100px;
+    background-color: #ffffff73;
+    border-radius: 10px;
+    position: relative;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 15px;
+
+    background-color: #b7ffb1c7;
+}
+
+.toast__container_type_error {
+    background-color: #ffb1b1b2;
+}
+
+.toast__btn-close {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
+.toast__title {
+    @extend .font-h2;
+    margin: 10px 0;
+    color: #005200;
+    font-weight: bold;
+}
+
+.toast__text {
+    @extend .font-text;
+    margin: 10px 0;
+    color: #005200;
+}
+
+.toast__text_type_error {
+    color: #ff2323;
 }

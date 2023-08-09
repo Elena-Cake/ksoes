@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+import 'primeicons/primeicons.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

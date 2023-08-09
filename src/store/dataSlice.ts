@@ -3,6 +3,7 @@ import { api } from '../api/api'
 import { MeansRecordsDayType, ObservatoryRecordsDayType, dateFormValues } from '../types/types'
 import { setNetworkError } from './appSlice'
 
+const ERROR_NETWORK = 'Проверьте интернет соединение'
 const initialState = {
     observatoryDay: [] as ObservatoryRecordsDayType[],
     meansDay: [] as MeansRecordsDayType[],
@@ -63,6 +64,9 @@ const dataSlice = createSlice({
                 meansDay: [] as MeansRecordsDayType[],
                 error: null
             }
+        },
+        removeDataError(state) {
+            state.error = null
         }
     },
     extraReducers: (builder) => {
@@ -76,10 +80,11 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getObservatoryByStatDay.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
             // getObservatoryByDay
             .addCase(getObservatoryByDay.pending, (state) => {
+
             })
             .addCase(getObservatoryByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
@@ -87,7 +92,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getObservatoryByDay.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
             // getObservatoryByDays
             .addCase(getObservatoryByDays.pending, (state) => {
@@ -98,7 +103,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getObservatoryByDays.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
 
 
@@ -111,7 +116,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getMeansByStatDay.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
             // getMeansByDay
             .addCase(getMeansByDay.pending, (state) => {
@@ -122,7 +127,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getMeansByDay.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
             // getMeansByDays
             .addCase(getMeansByDays.pending, (state) => {
@@ -133,11 +138,11 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getMeansByDays.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
     }
 })
 export const {
-    cleanData } = dataSlice.actions
+    cleanData, removeDataError } = dataSlice.actions
 export default dataSlice.reducer
 

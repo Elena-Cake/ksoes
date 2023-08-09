@@ -19,7 +19,6 @@ type DataResType<R> = {
 }
 
 export const api = {
-
     // https://ares.ksoes.ru/api.php?act=upload_files&name=group&get=stat_day&group=observatory
     getObservatoryByStatDay() {
         return instance.get<DataResType<ObservatoryRecordsDayType>>(`${BASE_API}&group=observatory&${getToken()}`)

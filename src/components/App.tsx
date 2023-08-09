@@ -1,17 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken } from '../store/authSlice';
 import Header from './Header/Header';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { getMeansByDay, getMeansByStatDay, getObservatoryByDay, getObservatoryByStatDay } from '../store/dataSlice';
+import { getMeansByStatDay, getObservatoryByStatDay, removeDataError } from '../store/dataSlice';
 import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
 import Spinner from './Spinner/Spinner';
 import { Toast } from 'primereact/toast';
-import { removeError } from '../store/appSlice';
-import { getMeans, getObservatory, getTypes } from '../store/vocabularySlice';
+import { removeError, setNetworkError } from '../store/appSlice';
+import { getMeans, getObservatory, getTypes, removeVocError, setCatalogs } from '../store/vocabularySlice';
+import MyToast from './Toast/Toast';
 
 function App() {
 
@@ -19,17 +20,37 @@ function App() {
   const isAuth = useAppSelector(state => state.auth.isAuth)
   const isPending = useAppSelector(s => s.appSlice.isPending)
 
-  const toast = useRef<Toast>(null);
-  const error = useAppSelector(s => s.appSlice.error)
+  // const toast = useRef<Toast>(null);
+  const AppError = useAppSelector(s => s.appSlice.error)
+  const VocError = useAppSelector(s => s.vocabularySlice.error)
+  const DataError = useAppSelector(s => s.dataSlice.error)
 
-  const means = useAppSelector(s => s.vocabularySlice.means)
+  // toast
+  const [isVisibleToast, setIsVisibleToast] = useState(true)
+  const [toastSettings, setToastSettings] = useState({ isError: true, message: '' })
+
+  const closeToast = () => {
+    setIsVisibleToast(false)
+  }
+
+  const showToastError = (error: string, typeError: 'app' | 'vocabulary' | 'data') => {
+    setIsVisibleToast(true)
+    setToastSettings({ isError: true, message: error })
+    setTimeout(() => {
+      setIsVisibleToast(false)
+      if (typeError === 'app') dispatch(removeError())
+      if (typeError === 'data') dispatch(removeDataError())
+      if (typeError === 'vocabulary') dispatch(removeVocError())
+    }, 3000)
+  }
 
   useEffect(() => {
-    if (error) {
-      toast.current?.show({ severity: 'error', summary: 'Error', detail: error, life: 5000 });
-      dispatch(removeError())
+    if (AppError || VocError || DataError) {
+      if (AppError) showToastError(AppError, 'app')
+      if (VocError) showToastError(VocError, 'vocabulary')
+      if (DataError) showToastError(DataError, 'data')
     }
-  }, [error])
+  }, [AppError, VocError, DataError])
 
   // проверка токена
   useEffect(() => {
@@ -38,22 +59,25 @@ function App() {
 
   useEffect(() => {
     if (isAuth) {
-      // if (localStorage.getItem('catalogTypes')) {
-      //   dispatch(setCatalogs())
-      // } else {
-      dispatch(getTypes())
-      dispatch(getObservatory())
-      dispatch(getMeans())
-      // }
+      if (localStorage.getItem('catalogTypes')) {
+        dispatch(setCatalogs())
+      } else {
+        dispatch(getTypes())
+        dispatch(getObservatory())
+        dispatch(getMeans())
+      }
       dispatch(getObservatoryByStatDay())
       dispatch(getMeansByStatDay())
     }
   }, [isAuth])
 
 
+
   return (
     <div className="App">
-      <Toast ref={toast} />
+      <button onClick={() => dispatch(setNetworkError())}>x</button>
+      {/* <Toast ref={toast} /> */}
+      <MyToast isVisible={isVisibleToast} values={toastSettings} closeToast={closeToast} />
       {isPending &&
         <Spinner />
       }

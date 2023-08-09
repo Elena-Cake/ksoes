@@ -1,14 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 import { MeansRecordsAppType, ObservatoryRecordsType, TypesRecordsType } from '../types/types'
-import { removeError, setNetworkError } from './appSlice'
+
 import { useAppDispatch } from './store'
 import { apiVocabulary } from '../api/vocabulary'
 
+const ERROR_NETWORK = 'Проверьте интернет соединение'
 const initialState = {
     types: [] as TypesRecordsType[],
     observatory: [] as ObservatoryRecordsType[],
-    means: [] as MeansRecordsAppType[]
+    means: [] as MeansRecordsAppType[],
+    error: null as string | null
 }
 
 export const getTypes = createAsyncThunk(
@@ -42,7 +44,8 @@ const vocabularySlice = createSlice({
             state = {
                 types: [] as TypesRecordsType[],
                 observatory: [] as ObservatoryRecordsType[],
-                means: [] as MeansRecordsAppType[]
+                means: [] as MeansRecordsAppType[],
+                error: null
             }
         },
         setCatalogs(state) {
@@ -54,13 +57,16 @@ const vocabularySlice = createSlice({
 
             const catalogMeans = localStorage.getItem('catalogMeans') || ''
             state.means = JSON.parse(catalogMeans) || []
+        },
+        removeVocError(state) {
+            state.error = null
         }
     },
     extraReducers: (builder) => {
         builder
             // getTypes
             .addCase(getTypes.pending, (state) => {
-                removeError()
+
             })
             .addCase(getTypes.fulfilled, (state, action) => {
                 if (action.payload.success) {
@@ -69,11 +75,11 @@ const vocabularySlice = createSlice({
                 }
             })
             .addCase(getTypes.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
             // getObservatory
             .addCase(getObservatory.pending, (state) => {
-                removeError()
+
             })
             .addCase(getObservatory.fulfilled, (state, action) => {
                 if (action.payload.success) {
@@ -82,11 +88,11 @@ const vocabularySlice = createSlice({
                 }
             })
             .addCase(getObservatory.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
             // getMeans
             .addCase(getMeans.pending, (state) => {
-                removeError()
+
             })
             .addCase(getMeans.fulfilled, (state, action) => {
                 if (action.payload.success) {
@@ -109,11 +115,11 @@ const vocabularySlice = createSlice({
                 }
             })
             .addCase(getMeans.rejected, (state) => {
-                setNetworkError()
+                state.error = ERROR_NETWORK
             })
     }
 })
 export const {
-    cleanVocabulary, setCatalogs } = vocabularySlice.actions
+    cleanVocabulary, setCatalogs, removeVocError } = vocabularySlice.actions
 export default vocabularySlice.reducer
 
