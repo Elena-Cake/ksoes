@@ -5,7 +5,8 @@ import { setNetworkError } from './appSlice'
 
 const initialState = {
     observatoryDay: [] as ObservatoryRecordsDayType[],
-    meansDay: [] as MeansRecordsDayType[]
+    meansDay: [] as MeansRecordsDayType[],
+
 }
 
 export const getObservatoryByDay = createAsyncThunk(

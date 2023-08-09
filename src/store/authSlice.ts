@@ -32,8 +32,7 @@ const authSlice = createSlice({
             state.isAuth = false
             state.login = null
             localStorage.removeItem('token')
-            cleanData()
-            cleanVocabulary()
+            localStorage.clear()
         },
         setUserName(state, action: PayloadAction<{ userName: string }>) {
             state.login = action.payload.userName

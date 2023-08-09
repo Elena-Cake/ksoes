@@ -10,7 +10,7 @@ import Observatory from './Observatory/Observatory';
 import Spinner from './Spinner/Spinner';
 import { Toast } from 'primereact/toast';
 import { removeError } from '../store/appSlice';
-import { getMeans, getObservatory, getTypes } from '../store/vocabularySlice';
+import { getMeans, getObservatory, getTypes, setCatalogs } from '../store/vocabularySlice';
 
 function App() {
 
@@ -35,12 +35,14 @@ function App() {
 
   useEffect(() => {
     if (isAuth) {
-      dispatch(getTypes())
-
-      dispatch(getObservatory())
+      if (localStorage.getItem('catalogTypes')) {
+        dispatch(setCatalogs())
+      } else {
+        dispatch(getTypes())
+        dispatch(getObservatory())
+        dispatch(getMeans())
+      }
       dispatch(getObservatoryByDay())
-
-      dispatch(getMeans())
       dispatch(getMeansByDay())
     }
   }, [isAuth])

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 import { MeansRecordsAppType, ObservatoryRecordsType, TypesRecordsType } from '../types/types'
 import { removeError, setNetworkError } from './appSlice'
+import { useAppDispatch } from './store'
 
 const initialState = {
     types: [] as TypesRecordsType[],
@@ -42,7 +43,18 @@ const vocabularySlice = createSlice({
                 observatory: [] as ObservatoryRecordsType[],
                 means: [] as MeansRecordsAppType[]
             }
+        },
+        setCatalogs(state) {
+            const catalogTypes = localStorage.getItem('catalogTypes') || ''
+            state.types = JSON.parse(catalogTypes) || []
+
+            const catalogObservatory = localStorage.getItem('catalogObservatory') || ''
+            state.types = JSON.parse(catalogObservatory) || []
+
+            const catalogMeans = localStorage.getItem('catalogMeans') || ''
+            state.types = JSON.parse(catalogMeans) || []
         }
+
     },
     extraReducers: (builder) => {
         builder
@@ -53,6 +65,7 @@ const vocabularySlice = createSlice({
             .addCase(getTypes.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.types = action.payload.records
+                    localStorage.setItem('catalogTypes', JSON.stringify(action.payload.records))
                 }
             })
             .addCase(getTypes.rejected, (state) => {
@@ -65,6 +78,7 @@ const vocabularySlice = createSlice({
             .addCase(getObservatory.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.observatory = action.payload.records
+                    localStorage.setItem('catalogObservatory', JSON.stringify(action.payload.records))
                 }
             })
             .addCase(getObservatory.rejected, (state) => {
@@ -91,6 +105,7 @@ const vocabularySlice = createSlice({
                         })
                     })
                     state.means = means
+                    localStorage.setItem('catalogMeans', JSON.stringify(means))
                 }
             })
             .addCase(getMeans.rejected, (state) => {
@@ -99,6 +114,6 @@ const vocabularySlice = createSlice({
     }
 })
 export const {
-    cleanVocabulary } = vocabularySlice.actions
+    cleanVocabulary, setCatalogs } = vocabularySlice.actions
 export default vocabularySlice.reducer
 
