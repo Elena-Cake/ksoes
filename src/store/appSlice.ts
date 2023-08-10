@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { errorTexts } from '../constans/errors'
 
-const ERROR_NETWORK = 'Проверьте интернет соединение'
 const initialState = {
     isPending: false,
     error: null as string | null
@@ -18,7 +18,7 @@ const appSlice = createSlice({
             state.isPending = false
         },
         setNetworkError(state) {
-            state.error = ERROR_NETWORK
+            state.error = errorTexts.network.ERROR_NETWORK
         },
         removeError(state) {
             state.error = null

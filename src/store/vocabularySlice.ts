@@ -4,8 +4,8 @@ import { MeansRecordsAppType, ObservatoryRecordsType, TypesRecordsType } from '.
 
 import { useAppDispatch } from './store'
 import { apiVocabulary } from '../api/vocabulary'
+import { errorTexts } from '../constans/errors'
 
-const ERROR_NETWORK = 'Проверьте интернет соединение'
 const initialState = {
     types: [] as TypesRecordsType[],
     observatory: [] as ObservatoryRecordsType[],
@@ -75,7 +75,7 @@ const vocabularySlice = createSlice({
                 }
             })
             .addCase(getTypes.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
             // getObservatory
             .addCase(getObservatory.pending, (state) => {
@@ -88,7 +88,7 @@ const vocabularySlice = createSlice({
                 }
             })
             .addCase(getObservatory.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
             // getMeans
             .addCase(getMeans.pending, (state) => {
@@ -115,7 +115,7 @@ const vocabularySlice = createSlice({
                 }
             })
             .addCase(getMeans.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
     }
 })

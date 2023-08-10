@@ -1,0 +1,1 @@
+export const TIME_UPDATE_REPORT = 6000 * 10 //10min

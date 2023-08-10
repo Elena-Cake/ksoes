@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './FormDates.scss';
 import { Button } from 'primereact/button';
+import { errorTexts } from "../../constans/errors";
 
 type PropsType = {
     onSend: (date_start: string, date_end?: string) => void,
@@ -26,23 +27,23 @@ const FormDates: React.FC<PropsType> = ({ onSend, apiError, onAskStatReport }) =
             const start = new Date(dateStart)
             const end = new Date(dateEnd)
             if (isDateInFuture(start)) {
-                setError('Интервал дат некорректен')
+                setError(errorTexts.dates.ERROR_DATE_INTERVAL)
                 return
             }
             if (start < end) {
                 onSend(dateStart, dateEnd)
             } else {
-                setError('Интервал дат некорректен')
+                setError(errorTexts.dates.ERROR_DATE_INTERVAL)
             }
         } else if (dateStart !== '' || dateEnd !== '') {
             const date = dateStart !== '' ? dateStart : dateEnd
             if (isDateInFuture(new Date(date))) {
-                setError('Введите корректную дату')
+                setError(errorTexts.dates.ERROR_DATE)
                 return
             }
             onSend(date)
         } else {
-            setError('Укажите дату(ы)')
+            setError(errorTexts.dates.ERROR_DATES_EMPTY)
         }
 
     }

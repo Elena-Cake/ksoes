@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { checkToken } from '../store/authSlice';
+import { checkToken, removeSuccsess } from '../store/authSlice';
 import Header from './Header/Header';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { getMeansByStatDay, getObservatoryByStatDay, removeDataError } from '../store/dataSlice';
@@ -25,6 +25,8 @@ function App() {
   const VocError = useAppSelector(s => s.vocabularySlice.error)
   const DataError = useAppSelector(s => s.dataSlice.error)
 
+  const AuthOk = useAppSelector(s => s.auth.succsess)
+
   // toast
   const [isVisibleToast, setIsVisibleToast] = useState(false)
   const [toastSettings, setToastSettings] = useState({ isError: true, message: '' })
@@ -33,9 +35,24 @@ function App() {
     setIsVisibleToast(false)
   }
 
-  const showToastError = (error: string, typeError: 'app' | 'vocabulary' | 'data') => {
+  const showToastSuccsess = (message: string) => {
     setIsVisibleToast(true)
-    setToastSettings({ isError: true, message: error })
+    setToastSettings({ isError: false, message: message })
+    setTimeout(() => {
+      setIsVisibleToast(false)
+      dispatch(removeSuccsess())
+    }, 3000)
+  }
+
+  useEffect(() => {
+    if (AuthOk) {
+      showToastSuccsess(AuthOk)
+    }
+  }, [AuthOk])
+
+  const showToastError = (message: string, typeError: 'app' | 'vocabulary' | 'data') => {
+    setIsVisibleToast(true)
+    setToastSettings({ isError: true, message: message })
     setTimeout(() => {
       setIsVisibleToast(false)
       if (typeError === 'app') dispatch(removeError())

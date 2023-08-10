@@ -2,8 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 import { MeansRecordsDayType, ObservatoryRecordsDayType, dateFormValues } from '../types/types'
 import { setNetworkError } from './appSlice'
+import { errorTexts } from '../constans/errors'
 
-const ERROR_NETWORK = 'Проверьте интернет соединение'
+
 const initialState = {
     observatoryDay: [] as ObservatoryRecordsDayType[],
     meansDay: [] as MeansRecordsDayType[],
@@ -79,7 +80,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getObservatoryByStatDay.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
             // getObservatoryByDay
             .addCase(getObservatoryByDay.pending, (state) => {
@@ -92,7 +93,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getObservatoryByDay.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
             // getObservatoryByDays
             .addCase(getObservatoryByDays.pending, (state) => {
@@ -104,7 +105,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getObservatoryByDays.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
 
 
@@ -119,7 +120,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getMeansByStatDay.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
             // getMeansByDay
             .addCase(getMeansByDay.pending, (state) => {
@@ -131,7 +132,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getMeansByDay.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
             // getMeansByDays
             .addCase(getMeansByDays.pending, (state) => {
@@ -143,7 +144,7 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getMeansByDays.rejected, (state) => {
-                state.error = ERROR_NETWORK
+                state.error = errorTexts.network.ERROR_NETWORK
             })
     }
 })

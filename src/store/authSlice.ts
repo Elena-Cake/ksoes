@@ -5,12 +5,15 @@ import { cleanData } from './dataSlice'
 import { cleanVocabulary } from './vocabularySlice'
 import { setIsPendingOff, setIsPendingOn } from './appSlice'
 import { apiAuth } from '../api/auth'
+import { errorTexts } from '../constans/errors'
+import { succsessTexts } from '../constans/succsess'
 
 const initialState = {
     login: null as string | null,
     isAuth: false,
     token: '' as string | null,
-    error: null as string | null
+    error: null as string | null,
+    succsess: null as string | null,
 }
 
 export const login = createAsyncThunk(
@@ -30,13 +33,15 @@ const authSlice = createSlice({
             if (token) state.isAuth = true
         },
         logout(state) {
-            state.isAuth = false
-            state.login = null
+            state = initialState
             localStorage.removeItem('token')
             localStorage.clear()
         },
         setUserName(state, action: PayloadAction<{ userName: string }>) {
             state.login = action.payload.userName
+        },
+        removeSuccsess(state) {
+            state.succsess = null
         }
     },
     extraReducers: (builder) => {
@@ -49,23 +54,24 @@ const authSlice = createSlice({
                     state.error = null
                     localStorage.setItem('token', action.payload.getToken)
                     state.isAuth = true
+                    state.succsess = succsessTexts.OK
                 } else {
                     if (action.payload.error === 'Invalid login or password') {
-                        state.error = 'Неверный логин или пароль'
+                        state.error = errorTexts.auth.ERROR_AUTHORISATION
                         state.login = null
                     } else {
-                        state.error = 'Ошибка, попробуйте снова'
+                        state.error = errorTexts.auth.ERROR
                     }
 
                 }
             })
             .addCase(login.rejected, (state) => {
-                state.error = 'Ошибка, попробуйте снова'
+                state.error = errorTexts.auth.ERROR
             })
     }
 })
 export const {
-    checkToken, logout, setUserName
+    checkToken, logout, setUserName, removeSuccsess
 } = authSlice.actions
 export default authSlice.reducer
 

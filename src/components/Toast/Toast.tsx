@@ -18,7 +18,7 @@ const MyToast: React.FC<PropsType> = ({ isVisible, values, closeToast }) => {
             {isVisible &&
                 < div className="toast" >
                     <div className={`toast__container ${values.isError && 'toast__container_type_error'}`}>
-                        <Button className="toast__btn-close" icon="pi pi-times" rounded text severity="danger" aria-label="Cancel" onClick={() => closeToast()} />
+                        <Button className="toast__btn-close" icon="pi pi-times" rounded text severity={values.isError ? "danger" : 'success'} aria-label="Cancel" onClick={() => closeToast()} />
                         <>
                             <p className={`toast__title ${values.isError && 'toast__text_type_error'}`}>{values.isError ? 'Error' : 'Success'}</p>
                         </>

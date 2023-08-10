@@ -5,6 +5,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import FormDates from "../FormDates/FormDates";
 import { getMeansByDay, getMeansByDays, getMeansByStatDay } from "../../store/dataSlice";
+import { TIME_UPDATE_REPORT } from "../../constans/constans";
 
 let intervalId: NodeJS.Timeout;
 
@@ -28,7 +29,7 @@ const Means: React.FC = () => {
             } else {
                 stopSendingRequests();
             }
-        }, 60000 * 10);// 1 min
+        }, TIME_UPDATE_REPORT);
     }
     function stopSendingRequests() {
         clearInterval(intervalId);
