@@ -3,14 +3,16 @@ import { api } from '../api/api'
 import { MeansRecordsDayType, ObservatoryRecordsDayType, dateFormValues } from '../types/types'
 import { setNetworkError } from './appSlice'
 import { errorTexts } from '../constans/errors'
+import { succsessTexts } from '../constans/succsess'
 
 
 const initialState = {
     observatoryDay: [] as ObservatoryRecordsDayType[],
     meansDay: [] as MeansRecordsDayType[],
-    error: null as string | null,
     isStatReportObservatoryUpdate: true,
-    isStatReportMeansUpdate: true
+    isStatReportMeansUpdate: true,
+    error: null as string | null,
+    succsess: null as string | null
 }
 
 export const getObservatoryByStatDay = createAsyncThunk(
@@ -66,6 +68,9 @@ const dataSlice = createSlice({
         },
         removeDataError(state) {
             state.error = null
+        },
+        removeSuccsessMessageData(state) {
+            state.succsess = null
         }
     },
     extraReducers: (builder) => {
@@ -75,6 +80,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByStatDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.succsess = succsessTexts.UPDATED
                     state.isStatReportObservatoryUpdate = true
                     state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
@@ -88,6 +94,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.succsess = succsessTexts.OK
                     state.isStatReportObservatoryUpdate = false
                     state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
@@ -100,6 +107,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByDays.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.succsess = succsessTexts.OK
                     state.isStatReportObservatoryUpdate = false
                     state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
@@ -114,6 +122,7 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByStatDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.succsess = succsessTexts.UPDATED
                     state.isStatReportMeansUpdate = true
                     // state.meansDay = action.payload.records
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
@@ -127,6 +136,7 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.succsess = succsessTexts.OK
                     state.isStatReportMeansUpdate = false
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
@@ -139,6 +149,7 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByDays.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.succsess = succsessTexts.OK
                     state.isStatReportMeansUpdate = false
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
@@ -149,6 +160,7 @@ const dataSlice = createSlice({
     }
 })
 export const {
-    cleanData, removeDataError } = dataSlice.actions
+    cleanData, removeDataError, removeSuccsessMessageData
+} = dataSlice.actions
 export default dataSlice.reducer
 

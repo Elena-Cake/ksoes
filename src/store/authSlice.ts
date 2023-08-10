@@ -40,7 +40,7 @@ const authSlice = createSlice({
         setUserName(state, action: PayloadAction<{ userName: string }>) {
             state.login = action.payload.userName
         },
-        removeSuccsess(state) {
+        removeSuccsessMessageAuth(state) {
             state.succsess = null
         }
     },
@@ -71,7 +71,7 @@ const authSlice = createSlice({
     }
 })
 export const {
-    checkToken, logout, setUserName, removeSuccsess
+    checkToken, logout, setUserName, removeSuccsessMessageAuth
 } = authSlice.actions
 export default authSlice.reducer
 

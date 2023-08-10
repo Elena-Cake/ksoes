@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { checkToken, removeSuccsess } from '../store/authSlice';
+import { checkToken, removeSuccsessMessageAuth } from '../store/authSlice';
 import Header from './Header/Header';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { getMeansByStatDay, getObservatoryByStatDay, removeDataError } from '../store/dataSlice';
+import { getMeansByStatDay, getObservatoryByStatDay, removeDataError, removeSuccsessMessageData } from '../store/dataSlice';
 import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
 import Spinner from './Spinner/Spinner';
@@ -25,7 +25,8 @@ function App() {
   const VocError = useAppSelector(s => s.vocabularySlice.error)
   const DataError = useAppSelector(s => s.dataSlice.error)
 
-  const AuthOk = useAppSelector(s => s.auth.succsess)
+  const AuthMessageOk = useAppSelector(s => s.auth.succsess)
+  const DataMessageOk = useAppSelector(s => s.dataSlice.succsess)
 
   // toast
   const [isVisibleToast, setIsVisibleToast] = useState(false)
@@ -35,29 +36,31 @@ function App() {
     setIsVisibleToast(false)
   }
 
-  const showToastSuccsess = (message: string) => {
+  const showToastSuccsess = (message: string, typeSlice: 'app' | 'vocabulary' | 'data' | 'auth') => {
     setIsVisibleToast(true)
     setToastSettings({ isError: false, message: message })
     setTimeout(() => {
       setIsVisibleToast(false)
-      dispatch(removeSuccsess())
+      if (typeSlice === 'auth') dispatch(removeSuccsessMessageAuth())
+      if (typeSlice === 'data') dispatch(removeDataError())
+      if (typeSlice === 'vocabulary') dispatch(removeVocError())
     }, 3000)
   }
 
   useEffect(() => {
-    if (AuthOk) {
-      showToastSuccsess(AuthOk)
+    if (AuthMessageOk || DataMessageOk) {
+      if (AuthMessageOk) showToastSuccsess(AuthMessageOk, 'auth')
+      if (DataMessageOk) showToastSuccsess(DataMessageOk, 'data')
     }
-  }, [AuthOk])
+  }, [AuthMessageOk, DataMessageOk])
 
-  const showToastError = (message: string, typeError: 'app' | 'vocabulary' | 'data') => {
+  const showToastError = (message: string, typeSlice: 'app' | 'vocabulary' | 'data') => {
     setIsVisibleToast(true)
     setToastSettings({ isError: true, message: message })
     setTimeout(() => {
       setIsVisibleToast(false)
-      if (typeError === 'app') dispatch(removeError())
-      if (typeError === 'data') dispatch(removeDataError())
-      if (typeError === 'vocabulary') dispatch(removeVocError())
+      if (typeSlice === 'app') dispatch(removeError())
+      if (typeSlice === 'data') dispatch(removeSuccsessMessageData())
     }, 3000)
   }
 
