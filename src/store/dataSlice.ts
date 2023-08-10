@@ -10,7 +10,6 @@ const initialState = {
     observatoryDay: [] as ObservatoryRecordsDayType[],
     meansDay: [] as MeansRecordsDayType[],
     isStatReportObservatoryUpdate: true,
-    isStatReportMeansUpdate: true,
     error: null as string | null,
     succsess: null as string | null
 }
@@ -123,7 +122,6 @@ const dataSlice = createSlice({
             .addCase(getMeansByStatDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.succsess = succsessTexts.UPDATED
-                    state.isStatReportMeansUpdate = true
                     // state.meansDay = action.payload.records
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
@@ -137,7 +135,6 @@ const dataSlice = createSlice({
             .addCase(getMeansByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.succsess = succsessTexts.OK
-                    state.isStatReportMeansUpdate = false
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
@@ -150,7 +147,6 @@ const dataSlice = createSlice({
             .addCase(getMeansByDays.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.succsess = succsessTexts.OK
-                    state.isStatReportMeansUpdate = false
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })

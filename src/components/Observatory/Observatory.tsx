@@ -4,8 +4,12 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import FormDates from "../FormDates/FormDates";
-import { getObservatoryByDay, getObservatoryByDays, getObservatoryByStatDay } from "../../store/dataSlice";
-import { TIME_UPDATE_REPORT } from "../../constans/constans";
+import { getMeansByDay, getMeansByDays, getMeansByStatDay, getObservatoryByDay, getObservatoryByDays, getObservatoryByStatDay } from "../../store/dataSlice";
+import { OBJECT_EXTEND_ROWS, TIME_UPDATE_REPORT } from "../../constans/constans";
+import { TreeTable, TreeTableExpandedKeysType } from "primereact/treetable";
+import { TreeTableType } from "../../types/types";
+import { TreeNode } from "primereact/treenode";
+import { TreeExpandedKeysType } from "primereact/tree";
 
 let intervalId: NodeJS.Timeout;
 
@@ -14,8 +18,13 @@ const Observatory: React.FC = () => {
 
     const types = useAppSelector(s => s.vocabularySlice.types)
     const observatory = useAppSelector(s => s.vocabularySlice.observatory)
-    const observatoruDay = useAppSelector(s => s.dataSlice.observatoryDay)
+    const means = useAppSelector(s => s.vocabularySlice.means)
 
+    const observatoryDay = useAppSelector(s => s.dataSlice.observatoryDay)
+    const meansDay = useAppSelector(s => s.dataSlice.meansDay)
+
+    const [dataTableTree, setDataTableTree] = useState([] as TreeTableType[])
+    const [expandedKeys, setExpandedKeys] = useState<TreeTableExpandedKeysType | undefined>(OBJECT_EXTEND_ROWS);
     // const-s to api interval
     const isReportUpdate = useAppSelector(s => s.dataSlice.isStatReportObservatoryUpdate)
     const previsReportUpdateRef = useRef<boolean | null>(null);
@@ -25,6 +34,7 @@ const Observatory: React.FC = () => {
         intervalId = setInterval(() => {
             if (isReportUpdate) {
                 dispatch(getObservatoryByStatDay())
+                dispatch(getMeansByStatDay())
             } else {
                 stopSendingRequests();
             }
@@ -46,40 +56,90 @@ const Observatory: React.FC = () => {
         previsReportUpdateRef.current = isReportUpdate
     }, [isReportUpdate])
 
-
-    const dataTable = observatoruDay.map(data => {
-
-        return {
-            id: data.id_observatory,
-            name: observatory[data.id_observatory],
-            type: types.find(type => type.id === data.id_type)?.name,
-            count: data.count
-        }
-    })
-
     const getReport = (date_start: string, date_end?: string) => {
         if (date_end) {
             dispatch(getObservatoryByDays({ date_start, date_end }))
+            dispatch(getMeansByDays({ date_start, date_end }))
         } else {
             dispatch(getObservatoryByDay({ date_start }))
+            dispatch(getMeansByDay({ date_start }))
         }
     }
 
     const onAskStatReport = () => {
         dispatch(getObservatoryByStatDay())
+        dispatch(getMeansByStatDay())
     }
+
+    useEffect(() => {
+        if (observatoryDay) {
+            const dataTable = observatoryDay.map((data, i) => {
+                return {
+                    key: i,
+                    data: {
+                        id: data.id_observatory,
+                        name: observatory[data.id_observatory],
+                        type: types.find(type => type.id === data.id_type)?.name,
+                        count: data.count
+                    },
+                    children: [] as TreeTableType[]
+                }
+            })
+            meansDay.forEach(data => {
+                const idObs = means.find(mean => mean.id_mean === String(data.id_mean))?.id_observatory
+                const obsItem = dataTable.find(item => String(item.data.id) === idObs)
+                if (obsItem) {
+                    const name = means.find(mean => mean.id_mean === String(data.id_mean))?.name_mean
+                    // @ts-ignore
+                    const j = obsItem.children.length
+                    // @ts-ignore
+                    obsItem.children.push({
+                        key: obsItem.key + '-' + j,
+                        data: {
+                            id_mean: data.id_mean,
+                            name: name?.slice(name?.indexOf(' ')),
+                            type: types.find(type => type.id === data.id_type)?.name,
+                            count: data.count
+                        },
+                    })
+                }
+            })
+
+            setDataTableTree(dataTable)
+        }
+    }, [observatoryDay])
+
+    const rowClassName = (node: TreeNode) => {
+        return { 'p-highlight': node.data.id_mean };
+    }
+
+    // const getExpandedNodes = () => {
+    //     let obj = {}
+
+    //     observatoryDay.forEach((item, i) => {
+    //         // @ts-ignore
+    //         obj[i] = true
+    //     })
+    //     console.log(obj)
+    //     return obj
+    // }
 
     return (
         <section className='observatory'>
             <p className="observatory__title">Получить отчет по обсерваториям </p>
             <FormDates apiError={null} onSend={getReport} onAskStatReport={onAskStatReport} />
-            <div className="observatory_table_type_day">
-                <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="800px">
-                    <Column field="id" header="Id Observatory"></Column>
-                    <Column field="name" header="Name"></Column>
-                    <Column field="type" header="Type"></Column>
-                    <Column field="count" header="Count"></Column>
-                </DataTable>
+            <div className="observatory_table_type_day" >
+                <TreeTable
+                    value={dataTableTree}
+                    tableStyle={{ minWidth: '100%' }}
+                    scrollable scrollHeight="70vh"
+                    rowClassName={rowClassName}
+                    expandedKeys={expandedKeys}
+                >
+                    <Column field="name" header="Name" expander style={{ minWidth: '30vw' }} ></Column>
+                    <Column field="type" header="Type" style={{ minWidth: '30vw' }}></Column>
+                    <Column field="count" header="Count" style={{ minWidth: '30vw' }}></Column>
+                </TreeTable>
             </div>
         </section>
     )

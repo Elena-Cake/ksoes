@@ -6,7 +6,7 @@ import { checkToken, removeSuccsessMessageAuth } from '../store/authSlice';
 import Header from './Header/Header';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { getMeansByStatDay, getObservatoryByStatDay, removeDataError, removeSuccsessMessageData } from '../store/dataSlice';
-import Means from './Means/Means';
+// import Means from './Means/Means';
 import Observatory from './Observatory/Observatory';
 import Spinner from './Spinner/Spinner';
 import { Toast } from 'primereact/toast';
@@ -42,8 +42,7 @@ function App() {
     setTimeout(() => {
       setIsVisibleToast(false)
       if (typeSlice === 'auth') dispatch(removeSuccsessMessageAuth())
-      if (typeSlice === 'data') dispatch(removeDataError())
-      if (typeSlice === 'vocabulary') dispatch(removeVocError())
+      if (typeSlice === 'data') dispatch(removeSuccsessMessageData())
     }, 3000)
   }
 
@@ -107,7 +106,7 @@ function App() {
         isAuth &&
         <div className='main'>
           <Observatory />
-          <Means />
+          {/* <Means /> */}
         </div>
       }
     </div >

@@ -41,10 +41,9 @@ export type MeansRecordsDayType = {
 // PrimeReact
 export type TreeTableType = {
     key: string | number,
-    // @ts-ignore
-    label: string,
+    // label: string,
     data: any,
-    icon: string,
+    // icon: string,
     children?: TreeTableType[]
 }
 
