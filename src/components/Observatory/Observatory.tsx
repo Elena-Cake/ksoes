@@ -138,7 +138,7 @@ const Observatory: React.FC = () => {
                 >
                     <Column field="name" header="Наименование" expander style={{ minWidth: '30vw' }} ></Column>
                     <Column field="type" header="Тип информации" style={{ minWidth: '30vw' }}></Column>
-                    <Column field="count" header="Количество пакетов" style={{ minWidth: '30vw' }}></Column>
+                    <Column field="count" header="Количество" style={{ minWidth: '30vw' }}></Column>
                 </TreeTable>
             </div>
         </section>
