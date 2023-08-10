@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import './Means.scss';
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import FormDates from "../FormDates/FormDates";
-import { getMeansByDay, getMeansByDays } from "../../store/dataSlice";
+import { getMeansByDay, getMeansByDays, getMeansByStatDay } from "../../store/dataSlice";
+
+let intervalId: NodeJS.Timeout;
 
 const Means: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -12,6 +14,37 @@ const Means: React.FC = () => {
     // const observatory = useAppSelector(s => s.dataSlice.observatory)
     const means = useAppSelector(s => s.vocabularySlice.means)
     const meansDay = useAppSelector(s => s.dataSlice.meansDay)
+
+
+    // const-s to api interval
+    const isReportUpdate = useAppSelector(s => s.dataSlice.isStatReportMeansUpdate)
+    const previsReportUpdateRef = useRef<boolean | null>(null);
+
+    // setInterval and clean it
+    function startSendingRequests() {
+        intervalId = setInterval(() => {
+            if (isReportUpdate) {
+                dispatch(getMeansByStatDay())
+            } else {
+                stopSendingRequests();
+            }
+        }, 60000 * 10);// 1 min
+    }
+    function stopSendingRequests() {
+        clearInterval(intervalId);
+    }
+    // check Update
+    useEffect(() => {
+        if (isReportUpdate && isReportUpdate !== previsReportUpdateRef.current) {
+            startSendingRequests();
+        } else if (!isReportUpdate) {
+            stopSendingRequests();
+        }
+    }, [isReportUpdate])
+    // get previos isReportUpdate
+    useEffect(() => {
+        previsReportUpdateRef.current = isReportUpdate
+    }, [isReportUpdate])
 
     const dataTable = meansDay.map(data => {
         const name = means.find(mean => mean.id_mean === String(data.id_mean))?.name_mean
@@ -33,10 +66,14 @@ const Means: React.FC = () => {
         }
     }
 
+    const onAskStatReport = () => {
+        dispatch(getMeansByStatDay())
+    }
+
     return (
         <section className='means'>
             <p className="means__title">Получить отчет по средствам </p>
-            <FormDates apiError={null} onSend={getReport} />
+            <FormDates apiError={null} onSend={getReport} onAskStatReport={onAskStatReport} />
             <div className="means_table_type_day">
                 <DataTable value={dataTable} tableStyle={{ minWidth: '100%' }} scrollable scrollHeight="70vh" >
                     <Column field="name_observatory" header="Observatory"></Column>

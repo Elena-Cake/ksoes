@@ -7,7 +7,9 @@ const ERROR_NETWORK = 'Проверьте интернет соединение'
 const initialState = {
     observatoryDay: [] as ObservatoryRecordsDayType[],
     meansDay: [] as MeansRecordsDayType[],
-    error: null as string | null
+    error: null as string | null,
+    isStatReportObservatoryUpdate: true,
+    isStatReportMeansUpdate: true
 }
 
 export const getObservatoryByStatDay = createAsyncThunk(
@@ -59,11 +61,7 @@ const dataSlice = createSlice({
     reducers: {
         // lists
         cleanData(state) {
-            state = {
-                observatoryDay: [] as ObservatoryRecordsDayType[],
-                meansDay: [] as MeansRecordsDayType[],
-                error: null
-            }
+            state = initialState
         },
         removeDataError(state) {
             state.error = null
@@ -76,6 +74,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByStatDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.isStatReportObservatoryUpdate = true
                     state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
@@ -88,6 +87,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.isStatReportObservatoryUpdate = false
                     state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
@@ -99,6 +99,7 @@ const dataSlice = createSlice({
             })
             .addCase(getObservatoryByDays.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.isStatReportObservatoryUpdate = false
                     state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
@@ -112,6 +113,7 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByStatDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.isStatReportMeansUpdate = true
                     // state.meansDay = action.payload.records
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
@@ -124,6 +126,7 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByDay.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.isStatReportMeansUpdate = false
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })
@@ -135,6 +138,7 @@ const dataSlice = createSlice({
             })
             .addCase(getMeansByDays.fulfilled, (state, action) => {
                 if (action.payload.success) {
+                    state.isStatReportMeansUpdate = false
                     state.meansDay = action.payload.records.filter(item => item.count !== 0)
                 }
             })

@@ -4,10 +4,11 @@ import { Button } from 'primereact/button';
 
 type PropsType = {
     onSend: (date_start: string, date_end?: string) => void,
-    apiError: string | null
+    apiError: string | null,
+    onAskStatReport: () => void
 }
 
-const FormDates: React.FC<PropsType> = ({ onSend, apiError }) => {
+const FormDates: React.FC<PropsType> = ({ onSend, apiError, onAskStatReport }) => {
     const [dateStart, setDateStart] = useState<string>('');
     const [dateEnd, setDateEnd] = useState<string>('');
 
@@ -67,6 +68,9 @@ const FormDates: React.FC<PropsType> = ({ onSend, apiError }) => {
                 <Button label="Получить" outlined style={{ 'padding': '5px 15px' }} severity="info" />
             </form>
             <span className={`inputs__error ${error && "inputs__error_visible"}`}>{error}</span>
+            <Button label="Получить отчет за сегодня"
+                outlined style={{ 'padding': '5px 15px', 'minWidth': '250px' }} severity="info"
+                onClick={() => onAskStatReport()} />
         </div>
     )
 }
