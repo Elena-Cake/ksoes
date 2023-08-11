@@ -5,14 +5,15 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken, removeSuccsessMessageAuth } from '../store/authSlice';
 import Header from './Header/Header';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { getMeansByStatDay, getObservatoryByStatDay, removeDataError, removeSuccsessMessageData } from '../store/dataSlice';
+import { getMeansByStatDay, getObservatoryByStatDay, removeSuccsessMessageData } from '../store/dataSlice';
 // import Means from './Means/Means';
-import Observatory from './Observatory/Observatory';
 import Spinner from './Spinner/Spinner';
-import { Toast } from 'primereact/toast';
-import { removeError, setNetworkError } from '../store/appSlice';
-import { getMeans, getObservatory, getTypes, removeVocError, setCatalogs } from '../store/vocabularySlice';
+import { removeError } from '../store/appSlice';
+import { getMeans, getObservatory, getTypes, setCatalogs } from '../store/vocabularySlice';
 import MyToast from './Toast/Toast';
+import { Route, Routes } from 'react-router-dom';
+import ShowObservatory from './ShowObservatory/ShowObservatory';
+import GetReportsObservatory from './GetReportsObservatory/GetReportsObservatory';
 
 function App() {
 
@@ -94,8 +95,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <button onClick={() => dispatch(setNetworkError())}>x</button> */}
-      {/* <Toast ref={toast} /> */}
       < MyToast isVisible={isVisibleToast} values={toastSettings} closeToast={closeToast} />
       {isPending &&
         <Spinner />
@@ -105,8 +104,10 @@ function App() {
       {
         isAuth &&
         <div className='main'>
-          <Observatory />
-          {/* <Means /> */}
+          <Routes>
+            <Route path="/reports/" element={<GetReportsObservatory />} />
+            <Route path="*" element={<ShowObservatory />} />
+          </Routes>
         </div>
       }
     </div >

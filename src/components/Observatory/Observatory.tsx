@@ -2,14 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import './Observatory.scss';
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
-import FormDates from "../FormDates/FormDates";
-import { getMeansByDay, getMeansByDays, getMeansByStatDay, getObservatoryByDay, getObservatoryByDays, getObservatoryByStatDay } from "../../store/dataSlice";
+import { getMeansByStatDay, getObservatoryByStatDay } from "../../store/dataSlice";
 import { OBJECT_EXTEND_ROWS, TIME_UPDATE_REPORT } from "../../constans/constans";
 import { TreeTable, TreeTableExpandedKeysType } from "primereact/treetable";
 import { TreeTableType } from "../../types/types";
 import { TreeNode } from "primereact/treenode";
-import { TreeExpandedKeysType } from "primereact/tree";
 
 let intervalId: NodeJS.Timeout;
 
@@ -56,20 +53,20 @@ const Observatory: React.FC = () => {
         previsReportUpdateRef.current = isReportUpdate
     }, [isReportUpdate])
 
-    const getReport = (date_start: string, date_end?: string) => {
-        if (date_end) {
-            dispatch(getObservatoryByDays({ date_start, date_end }))
-            dispatch(getMeansByDays({ date_start, date_end }))
-        } else {
-            dispatch(getObservatoryByDay({ date_start }))
-            dispatch(getMeansByDay({ date_start }))
-        }
-    }
+    // const getReport = (date_start: string, date_end?: string) => {
+    //     if (date_end) {
+    //         dispatch(getObservatoryByDays({ date_start, date_end }))
+    //         dispatch(getMeansByDays({ date_start, date_end }))
+    //     } else {
+    //         dispatch(getObservatoryByDay({ date_start }))
+    //         dispatch(getMeansByDay({ date_start }))
+    //     }
+    // }
 
-    const onAskStatReport = () => {
-        dispatch(getObservatoryByStatDay())
-        dispatch(getMeansByStatDay())
-    }
+    // const onAskStatReport = () => {
+    //     dispatch(getObservatoryByStatDay())
+    //     dispatch(getMeansByStatDay())
+    // }
 
     useEffect(() => {
         if (observatoryDay) {
@@ -101,6 +98,7 @@ const Observatory: React.FC = () => {
                             type: types.find(type => type.id === data.id_type)?.name,
                             count: data.count
                         },
+
                     })
                 }
             })
@@ -126,8 +124,8 @@ const Observatory: React.FC = () => {
 
     return (
         <section className='observatory'>
-            <p className="observatory__title">Получить отчет по обсерваториям </p>
-            <FormDates apiError={null} onSend={getReport} onAskStatReport={onAskStatReport} />
+            {/* <p className="observatory__title">Получить отчет по обсерваториям </p>
+            <FormDates apiError={null} onSend={getReport} onAskStatReport={onAskStatReport} /> */}
             <div className="observatory_table_type_day" >
                 <TreeTable
                     value={dataTableTree}

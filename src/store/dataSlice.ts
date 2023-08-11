@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 import { MeansRecordsDayType, ObservatoryRecordsDayType, dateFormValues } from '../types/types'
-import { setNetworkError } from './appSlice'
 import { errorTexts } from '../constans/errors'
 import { succsessTexts } from '../constans/succsess'
 

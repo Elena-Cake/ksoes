@@ -1,0 +1,11 @@
+@import './../default_variables.scss';
+
+.getreports {
+    display: block;
+}
+
+.getreports__title {
+    @extend .font-h2;
+    text-align: left;
+    margin: 15px 0;
+}

@@ -44,7 +44,8 @@ export type TreeTableType = {
     // label: string,
     data: any,
     // icon: string,
-    children?: TreeTableType[]
+    children?: TreeTableType[],
+    style?: any
 }
 
 
