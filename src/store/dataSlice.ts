@@ -3,6 +3,7 @@ import { api } from '../api/api'
 import { MeansRecordsDayType, ObservatoryRecordsDayType, dateFormValues } from '../types/types'
 import { errorTexts } from '../constans/errors'
 import { succsessTexts } from '../constans/succsess'
+import { getDataWithDots } from '../utils/functions'
 
 
 const initialState = {
@@ -98,7 +99,7 @@ const dataSlice = createSlice({
                     state.succsess = succsessTexts.OK
                     state.isStatReportObservatoryUpdate = false
                     state.observatoryDay = action.payload.data.records.filter(item => item.count !== 0)
-                    state.dateReport = action.payload.date
+                    state.dateReport = getDataWithDots(action.payload.date)
                 }
             })
             .addCase(getObservatoryByDay.rejected, (state) => {
@@ -112,7 +113,8 @@ const dataSlice = createSlice({
                     state.succsess = succsessTexts.OK
                     state.isStatReportObservatoryUpdate = false
                     state.observatoryDay = action.payload.data.records.filter(item => item.count !== 0)
-                    state.dateReport = action.payload.date_start + ' - ' + action.payload.date_end
+                    // @ts-ignore
+                    state.dateReport = getDataWithDots(action.payload.date_start) + ' - ' + getDataWithDots(action.payload.date_end)
                 }
             })
             .addCase(getObservatoryByDays.rejected, (state) => {

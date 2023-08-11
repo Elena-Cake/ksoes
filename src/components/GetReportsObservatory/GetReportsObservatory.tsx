@@ -27,9 +27,10 @@ const GetReportsObservatory: React.FC = () => {
 
     return (
         <div className='getreports'>
-
-            <p className="getreports__title">Получить отчет по обсерваториям </p>
-            <FormDates apiError={null} onSend={getReport} onAskStatReport={onAskStatReport} />
+            <div className="getreports__form">
+                <p className="getreports__title">Получить отчет по обсерваториям </p>
+                <FormDates apiError={null} onSend={getReport} onAskStatReport={onAskStatReport} />
+            </div>
             <Observatory />
         </div>
     )

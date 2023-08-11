@@ -37,12 +37,10 @@ const Observatory: React.FC = () => {
             } else {
                 stopSendingRequests();
             }
-        }, TIME_UPDATE_REPORT);// 1 min
-        console.warn('start update stat report')
+        }, TIME_UPDATE_REPORT);
     }
     function stopSendingRequests() {
         clearInterval(intervalId);
-        console.warn('stop update stat report')
     }
     // check Update
     useEffect(() => {
@@ -56,21 +54,6 @@ const Observatory: React.FC = () => {
     useEffect(() => {
         previsReportUpdateRef.current = isReportUpdate
     }, [isReportUpdate])
-
-    // const getReport = (date_start: string, date_end?: string) => {
-    //     if (date_end) {
-    //         dispatch(getObservatoryByDays({ date_start, date_end }))
-    //         dispatch(getMeansByDays({ date_start, date_end }))
-    //     } else {
-    //         dispatch(getObservatoryByDay({ date_start }))
-    //         dispatch(getMeansByDay({ date_start }))
-    //     }
-    // }
-
-    // const onAskStatReport = () => {
-    //     dispatch(getObservatoryByStatDay())
-    //     dispatch(getMeansByStatDay())
-    // }
 
     useEffect(() => {
         if (observatoryDay) {
@@ -102,29 +85,18 @@ const Observatory: React.FC = () => {
                             type: types.find(type => type.id === data.id_type)?.name,
                             count: data.count
                         },
-
                     })
                 }
             })
 
             setDataTableTree([...dataTable])
+            setExpandedKeys(OBJECT_EXTEND_ROWS)
         }
     }, [observatoryDay])
 
     const rowClassName = (node: TreeNode) => {
         return { 'p-highlight': node.data.id_mean };
     }
-
-    // const getExpandedNodes = () => {
-    //     let obj = {}
-
-    //     observatoryDay.forEach((item, i) => {
-    //         // @ts-ignore
-    //         obj[i] = true
-    //     })
-    //     console.log(obj)
-    //     return obj
-    // }
 
     useEffect(() => () => stopSendingRequests(), []);
 
