@@ -13,6 +13,8 @@ let intervalId: NodeJS.Timeout;
 const Observatory: React.FC = () => {
     const dispatch = useAppDispatch()
 
+    const dateReport = useAppSelector(s => s.dataSlice.dateReport)
+
     const types = useAppSelector(s => s.vocabularySlice.types)
     const observatory = useAppSelector(s => s.vocabularySlice.observatory)
     const means = useAppSelector(s => s.vocabularySlice.means)
@@ -36,9 +38,11 @@ const Observatory: React.FC = () => {
                 stopSendingRequests();
             }
         }, TIME_UPDATE_REPORT);// 1 min
+        console.warn('start update stat report')
     }
     function stopSendingRequests() {
         clearInterval(intervalId);
+        console.warn('stop update stat report')
     }
     // check Update
     useEffect(() => {
@@ -103,7 +107,7 @@ const Observatory: React.FC = () => {
                 }
             })
 
-            setDataTableTree(dataTable)
+            setDataTableTree([...dataTable])
         }
     }, [observatoryDay])
 
@@ -122,10 +126,11 @@ const Observatory: React.FC = () => {
     //     return obj
     // }
 
+    useEffect(() => () => stopSendingRequests(), []);
+
     return (
         <section className='observatory'>
-            {/* <p className="observatory__title">Получить отчет по обсерваториям </p>
-            <FormDates apiError={null} onSend={getReport} onAskStatReport={onAskStatReport} /> */}
+            <p className="observatory__title">Oтчет по обсерваториям за {dateReport}</p>
             <div className="observatory_table_type_day" >
                 <TreeTable
                     value={dataTableTree}

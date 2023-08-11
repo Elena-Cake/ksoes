@@ -10,7 +10,8 @@ const initialState = {
     meansDay: [] as MeansRecordsDayType[],
     isStatReportObservatoryUpdate: true,
     error: null as string | null,
-    succsess: null as string | null
+    succsess: null as string | null,
+    dateReport: null as string | null
 }
 
 export const getObservatoryByStatDay = createAsyncThunk(
@@ -81,6 +82,8 @@ const dataSlice = createSlice({
                     state.succsess = succsessTexts.UPDATED
                     state.isStatReportObservatoryUpdate = true
                     state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
+                    const today = new Date()
+                    state.dateReport = today.getDate() + '.' + today.getMonth() + '.' + today.getFullYear()
                 }
             })
             .addCase(getObservatoryByStatDay.rejected, (state) => {
@@ -91,10 +94,11 @@ const dataSlice = createSlice({
 
             })
             .addCase(getObservatoryByDay.fulfilled, (state, action) => {
-                if (action.payload.success) {
+                if (action.payload.data.success) {
                     state.succsess = succsessTexts.OK
                     state.isStatReportObservatoryUpdate = false
-                    state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
+                    state.observatoryDay = action.payload.data.records.filter(item => item.count !== 0)
+                    state.dateReport = action.payload.date
                 }
             })
             .addCase(getObservatoryByDay.rejected, (state) => {
@@ -104,10 +108,11 @@ const dataSlice = createSlice({
             .addCase(getObservatoryByDays.pending, (state) => {
             })
             .addCase(getObservatoryByDays.fulfilled, (state, action) => {
-                if (action.payload.success) {
+                if (action.payload.data.success) {
                     state.succsess = succsessTexts.OK
                     state.isStatReportObservatoryUpdate = false
-                    state.observatoryDay = action.payload.records.filter(item => item.count !== 0)
+                    state.observatoryDay = action.payload.data.records.filter(item => item.count !== 0)
+                    state.dateReport = action.payload.date_start + ' - ' + action.payload.date_end
                 }
             })
             .addCase(getObservatoryByDays.rejected, (state) => {

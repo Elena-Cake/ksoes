@@ -31,14 +31,14 @@ export const api = {
         const { date_start } = formValues
         return instance.get<DataResType<ObservatoryRecordsDayType>>(`${BASE_API}&group=observatory&date_end=${date_start}&${getToken()}`)
             .then(res => {
-                return res.data
+                return { data: res.data, date: date_start }
             })
     },
     getObservatoryByDays(formValues: dateFormValues) {
         const { date_start, date_end } = formValues
         return instance.get<DataResType<ObservatoryRecordsDayType>>(`${BASE_API}&group=observatory&date_start=${date_start}&date_end=${date_end}&${getToken()}`)
             .then(res => {
-                return res.data
+                return { data: res.data, date_start, date_end }
             })
     },
 
