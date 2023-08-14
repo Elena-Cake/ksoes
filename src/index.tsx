@@ -5,8 +5,6 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store/store';
-import { PrimeReactProvider } from 'primereact/api';
-import 'primeicons/primeicons.css';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
@@ -15,11 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
 
   <Provider store={store}>
-    <PrimeReactProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </PrimeReactProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
 

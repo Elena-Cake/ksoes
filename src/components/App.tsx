@@ -4,7 +4,6 @@ import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken, removeSuccsessMessageAuth } from '../store/authSlice';
 import Header from './Header/Header';
-import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { getMeansByStatDay, getObservatoryByStatDay, removeSuccsessMessageData } from '../store/dataSlice';
 // import Means from './Means/Means';
 import Spinner from './Spinner/Spinner';

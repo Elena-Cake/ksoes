@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import './Spinner.scss';
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { Button } from 'primereact/button';
 import { logout } from "../../store/authSlice";
 
 const Spinner: React.FC = () => {

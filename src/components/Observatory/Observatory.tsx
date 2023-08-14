@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import './Observatory.scss';
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { Column } from "primereact/column";
 import { getMeansByStatDay, getObservatoryByStatDay } from "../../store/dataSlice";
 import { OBJECT_EXTEND_ROWS, TIME_UPDATE_REPORT } from "../../constans/constans";
-import { TreeTable, TreeTableExpandedKeysType } from "primereact/treetable";
 import { TreeTableType } from "../../types/types";
-import { TreeNode } from "primereact/treenode";
+import { Table } from "antd";
+import { ColumnsType } from "antd/es/table";
 
 let intervalId: NodeJS.Timeout;
 
@@ -23,7 +22,6 @@ const Observatory: React.FC = () => {
     const meansDay = useAppSelector(s => s.dataSlice.meansDay)
 
     const [dataTableTree, setDataTableTree] = useState([] as TreeTableType[])
-    const [expandedKeys, setExpandedKeys] = useState<TreeTableExpandedKeysType | undefined>(OBJECT_EXTEND_ROWS);
     // const-s to api interval
     const isReportUpdate = useAppSelector(s => s.dataSlice.isStatReportObservatoryUpdate)
     const previsReportUpdateRef = useRef<boolean | null>(null);
@@ -57,46 +55,49 @@ const Observatory: React.FC = () => {
 
     useEffect(() => {
         if (observatoryDay) {
-            const dataTable = observatoryDay.map((data, i) => {
+            const dataTable: TreeTableType[] = observatoryDay.map((data, i) => {
                 return {
                     key: i,
-                    data: {
-                        id: data.id_observatory,
-                        name: observatory[data.id_observatory],
-                        type: types.find(type => type.id === data.id_type)?.name,
-                        count: data.count
-                    },
-                    children: [] as TreeTableType[]
+                    id: data.id_observatory,
+                    name: String(observatory[data.id_observatory]),
+                    type: types.find(type => type.id === data.id_type)?.name,
+                    count: data.count
                 }
             })
             meansDay.forEach(data => {
                 const idObs = means.find(mean => mean.id_mean === String(data.id_mean))?.id_observatory
-                const obsItem = dataTable.find(item => String(item.data.id) === idObs)
+                const obsItem = dataTable.find(item => String(item.id) === idObs)
                 if (obsItem) {
                     const name = means.find(mean => mean.id_mean === String(data.id_mean))?.name_mean
                     // @ts-ignore
+                    if (!obsItem.children) {
+                        // @ts-ignore
+                        obsItem.children = []
+                    }
                     const j = obsItem.children.length
+
                     // @ts-ignore
                     obsItem.children.push({
                         key: obsItem.key + '-' + j,
-                        data: {
-                            id_mean: data.id_mean,
-                            name: name?.slice(name?.indexOf(' ')),
-                            type: types.find(type => type.id === data.id_type)?.name,
-                            count: data.count
-                        },
+                        id_mean: data.id_mean,
+                        name: name?.slice(name?.indexOf(' ')),
+                        type: types.find(type => type.id === data.id_type)?.name,
+                        count: data.count
                     })
                 }
             })
-
+            // @ts-ignore
             setDataTableTree([...dataTable])
-            setExpandedKeys(OBJECT_EXTEND_ROWS)
         }
     }, [observatoryDay])
 
-    const rowClassName = (node: TreeNode) => {
-        return { 'p-highlight': node.data.id_mean };
-    }
+    const columns: ColumnsType<TreeTableType> = [
+        { title: "Название", dataIndex: "name", key: "name" },
+        { title: "Тип", dataIndex: "type", key: "type" },
+        { title: "Количество", dataIndex: "count", key: "count" }
+    ];
+
+
 
     useEffect(() => () => stopSendingRequests(), []);
 
@@ -104,17 +105,15 @@ const Observatory: React.FC = () => {
         <section className='observatory'>
             <p className="observatory__title">Oтчет по обсерваториям за {dateReport}</p>
             <div className="observatory_table_type_day" >
-                <TreeTable
-                    value={dataTableTree}
-                    tableStyle={{ minWidth: '100%' }}
-                    scrollable scrollHeight="70vh"
-                    rowClassName={rowClassName}
-                    expandedKeys={expandedKeys}
-                >
-                    <Column field="name" header="Наименование" expander style={{ minWidth: '30vw' }} ></Column>
-                    <Column field="type" header="Тип информации" style={{ minWidth: '30vw' }}></Column>
-                    <Column field="count" header="Количество" style={{ minWidth: '30vw' }}></Column>
-                </TreeTable>
+                <Table
+                    columns={columns}
+                    expandable={{
+                        // @ts-ignore
+                        // rowExpandable: (row) => row.children !== undefined,
+                        defaultExpandAllRows: true
+                    }}
+                    dataSource={dataTableTree}
+                />
             </div>
         </section>
     )

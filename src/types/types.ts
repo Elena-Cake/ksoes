@@ -38,14 +38,15 @@ export type MeansRecordsDayType = {
     id_mean: number
 }
 
-// PrimeReact
+
 export type TreeTableType = {
     key: string | number,
-    // label: string,
-    data: any,
-    // icon: string,
-    children?: TreeTableType[],
-    style?: any
+    id?: number | string,
+    id_mean?: number | string,
+    name: string | undefined,
+    type: string | undefined,
+    count: number,
+    children?: TreeTableType[]
 }
 
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './FormDates.scss';
-import { Button } from 'primereact/button';
 import { errorTexts } from "../../constans/errors";
+import { Button } from "antd";
 
 type PropsType = {
     onSend: (date_start: string, date_end?: string) => void,
@@ -21,6 +21,7 @@ const FormDates: React.FC<PropsType> = ({ onSend, apiError, onAskStatReport }) =
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        console.log('submit')
         e.preventDefault()
         setError(null)
         if (dateStart !== '' && dateEnd !== '') {
@@ -66,12 +67,15 @@ const FormDates: React.FC<PropsType> = ({ onSend, apiError, onAskStatReport }) =
                     onChange={(e) => setDateEnd(e.target.value)}
                     value={dateEnd || ''} />
 
-                <Button label="Получить" outlined style={{ 'padding': '5px 15px' }} severity="info" />
+                <Button htmlType="submit" style={{ 'padding': '5px 15px' }}  >Получить</Button>
             </form>
             <span className={`inputs__error ${error && "inputs__error_visible"}`}>{error}</span>
-            <Button label="Получить отчет за сегодня"
-                outlined style={{ 'padding': '5px 15px', 'minWidth': '250px' }} severity="info"
-                onClick={() => onAskStatReport()} />
+            <Button
+                htmlType="button"
+                style={{ 'padding': '5px 15px', 'minWidth': '250px' }}
+                onClick={() => onAskStatReport()} >
+                Получить отчет за сегодня
+            </Button>
         </div>
     )
 }

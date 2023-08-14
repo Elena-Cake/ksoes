@@ -1,8 +1,6 @@
 // import React, { useEffect, useRef } from "react";
 // import './Means.scss';
 // import { useAppDispatch, useAppSelector } from "../../store/store";
-// import { Column } from "primereact/column";
-// import { DataTable } from "primereact/datatable";
 // import FormDates from "../FormDates/FormDates";
 // import { getMeansByDay, getMeansByDays, getMeansByStatDay } from "../../store/dataSlice";
 // import { TIME_UPDATE_REPORT } from "../../constans/constans";
