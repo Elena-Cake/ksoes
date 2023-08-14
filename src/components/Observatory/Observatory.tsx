@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import './Observatory.scss';
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { getMeansByStatDay, getObservatoryByStatDay } from "../../store/dataSlice";
-import { OBJECT_EXTEND_ROWS, TIME_UPDATE_REPORT } from "../../constans/constans";
+import { TIME_UPDATE_REPORT } from "../../constans/constans";
 import { TreeTableType } from "../../types/types";
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
@@ -20,6 +20,14 @@ const Observatory: React.FC = () => {
 
     const observatoryDay = useAppSelector(s => s.dataSlice.observatoryDay)
     const meansDay = useAppSelector(s => s.dataSlice.meansDay)
+
+
+    const typesFiltersValues = types.map(type => {
+        return {
+            text: type.name,
+            value: type.name,
+        }
+    })
 
     const [dataTableTree, setDataTableTree] = useState([] as TreeTableType[])
     // const-s to api interval
@@ -92,12 +100,24 @@ const Observatory: React.FC = () => {
     }, [observatoryDay])
 
     const columns: ColumnsType<TreeTableType> = [
-        { title: "Название", dataIndex: "name", key: "name" },
-        { title: "Тип", dataIndex: "type", key: "type" },
-        { title: "Количество", dataIndex: "count", key: "count" }
+        {
+            title: "Название",
+            dataIndex: "name",
+            key: "name"
+        },
+        {
+            title: "Тип",
+            dataIndex: "type",
+            key: "type",
+            filters: typesFiltersValues,
+            onFilter: (value, record) => record.type === value
+        },
+        {
+            title: "Количество",
+            dataIndex: "count",
+            key: "count"
+        }
     ];
-
-
 
     useEffect(() => () => stopSendingRequests(), []);
 
@@ -108,11 +128,10 @@ const Observatory: React.FC = () => {
                 <Table
                     columns={columns}
                     expandable={{
-                        // @ts-ignore
-                        // rowExpandable: (row) => row.children !== undefined,
                         defaultExpandAllRows: true
                     }}
                     dataSource={dataTableTree}
+                    pagination={false}
                 />
             </div>
         </section>

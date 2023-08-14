@@ -12,7 +12,7 @@ type PropsType = {
     }
 }
 
-const MyToast: React.FC<PropsType> = ({ isVisible, values, closeToast }) => {
+const Toast: React.FC<PropsType> = ({ isVisible, values, closeToast }) => {
 
     return (
         <>
@@ -35,4 +35,4 @@ const MyToast: React.FC<PropsType> = ({ isVisible, values, closeToast }) => {
     )
 }
 
-export default MyToast;
+export default Toast;

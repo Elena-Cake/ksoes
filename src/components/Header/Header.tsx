@@ -22,12 +22,6 @@ const Header: React.FC = () => {
                     Выйти
                     <CloseOutlined />
                 </Button>
-                // <Button icon="pi pi-times" label="Выйти"
-                //     text raised
-                //     className="header__logout" onClick={() => { dispatch(logout()) }}
-                //     style={{ 'padding': '5px', 'color': '#fff' }}
-                // >
-                // </Button>
             }
         </header>
     )

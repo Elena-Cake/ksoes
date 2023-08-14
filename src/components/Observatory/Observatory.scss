@@ -1,11 +1,25 @@
 @import './../default_variables.scss';
 
+.observatory {
+    grid-area: table;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+        'title'
+        'tableObs';
+    grid-template-rows: 50px calc(100% - 50px);
+    gap: 10px;
+}
+
 .observatory_table_type_day {
-    grid-area: obs;
+    grid-area: tableObs;
+    width: 100%;
+    overflow: scroll
 }
 
 .observatory__title {
     @extend .font-h2;
+    grid-area: title;
     text-align: left;
     margin: 15px 0;
 }

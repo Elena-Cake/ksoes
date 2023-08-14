@@ -1,14 +1,16 @@
 .App {
   text-align: center;
   position: relative;
+  display: grid;
+  grid-template-areas:
+    'head' ' main';
+  grid-template-rows: 50px calc(100vh - 100px);
+  gap: 20px;
 }
 
 .main {
-  display: grid;
-  grid-template-areas:
-    'obs' ' means';
-  gap: 2%;
-  width: 1400px;
-  max-width: 96%;
+  grid-area: main;
+  width: 96%;
+  max-width: 1400px;
   margin: 0 auto;
 }

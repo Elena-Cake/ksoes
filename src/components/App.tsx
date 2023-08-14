@@ -9,10 +9,10 @@ import { getMeansByStatDay, getObservatoryByStatDay, removeSuccsessMessageData }
 import Spinner from './Spinner/Spinner';
 import { removeError } from '../store/appSlice';
 import { getMeans, getObservatory, getTypes, setCatalogs } from '../store/vocabularySlice';
-import MyToast from './Toast/Toast';
 import { Route, Routes } from 'react-router-dom';
 import ShowObservatory from './ShowObservatory/ShowObservatory';
 import GetReportsObservatory from './GetReportsObservatory/GetReportsObservatory';
+import Toast from './Toast/Toast';
 
 function App() {
 
@@ -94,7 +94,7 @@ function App() {
 
   return (
     <div className="App">
-      < MyToast isVisible={isVisibleToast} values={toastSettings} closeToast={closeToast} />
+      < Toast isVisible={isVisibleToast} values={toastSettings} closeToast={closeToast} />
       {isPending &&
         <Spinner />
       }

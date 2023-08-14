@@ -21,7 +21,6 @@ const FormDates: React.FC<PropsType> = ({ onSend, apiError, onAskStatReport }) =
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        console.log('submit')
         e.preventDefault()
         setError(null)
         if (dateStart !== '' && dateEnd !== '') {

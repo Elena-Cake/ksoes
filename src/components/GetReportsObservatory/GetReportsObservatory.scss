@@ -1,15 +1,21 @@
 @import './../default_variables.scss';
 
 .getreports {
-    display: block;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 100px calc(100% - 100px);
+    grid-template-areas:
+        'form'
+        'table';
 }
 
 .getreports__title {
     @extend .font-h2;
     text-align: left;
-    margin: 15px 0;
+    margin: 0;
 }
 
 .getreports__form {
-    margin: 20px 0;
+    grid-area: form;
+    margin: 0;
 }

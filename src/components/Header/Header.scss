@@ -1,6 +1,8 @@
 @import '../default_variables.scss';
 
 .header {
+    width: 100%;
+    grid-area: head;
     min-height: 40px;
     background-color: $color-bg-header;
     display: grid;
@@ -19,4 +21,5 @@
 .header__logout {
     grid-area: logout;
     margin: 10px;
+    color: #ffffff;
 }
