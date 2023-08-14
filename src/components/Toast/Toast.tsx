@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './Toast.scss';
 import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './Header.scss';
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { logout } from "../../store/authSlice";

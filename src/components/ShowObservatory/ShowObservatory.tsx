@@ -5,7 +5,6 @@ import Observatory from "../Observatory/Observatory";
 
 const ShowObservatory: React.FC = () => {
 
-
     return (
         <>
             <Observatory isShow={true} />
