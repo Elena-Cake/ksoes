@@ -9,7 +9,7 @@ import { ColumnsType } from "antd/es/table";
 
 let intervalId: NodeJS.Timeout;
 
-const Observatory: React.FC = () => {
+const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
     const dispatch = useAppDispatch()
 
     const dateReport = useAppSelector(s => s.dataSlice.dateReport)
@@ -121,14 +121,20 @@ const Observatory: React.FC = () => {
 
     useEffect(() => () => stopSendingRequests(), []);
 
+    const rowStyle = isShow ? { style: { 'fontSize': '25px' } } : {}
+    const rowHeadStyle = isShow ? { style: { 'fontSize': '25px' } } : {}
+
     return (
         <section className='observatory'>
             <p className="observatory__title">Oтчет по обсерваториям за {dateReport}</p>
             <div className="observatory_table_type_day" >
                 <Table
+                    onRow={(record, index) => { return rowStyle }}
+                    onHeaderRow={(record, index) => { return rowHeadStyle }}
                     columns={columns}
                     expandable={{
-                        defaultExpandAllRows: true
+                        defaultExpandAllRows: true,
+                        expandRowByClick: true
                     }}
                     dataSource={dataTableTree}
                     pagination={false}

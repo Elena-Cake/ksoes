@@ -8,7 +8,7 @@ const ShowObservatory: React.FC = () => {
 
     return (
         <>
-            <Observatory />
+            <Observatory isShow={true} />
         </>
     )
 }
