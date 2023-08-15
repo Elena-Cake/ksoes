@@ -121,8 +121,8 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
 
     useEffect(() => () => stopSendingRequests(), []);
 
-    const rowStyle = isShow ? { style: { 'fontSize': '25px' } } : {}
-    const rowHeadStyle = isShow ? { style: { 'fontSize': '25px' } } : {}
+    const rowStyle = { style: { 'fontSize': `${isShow ? '25px' : '18px'}` } }
+    const rowHeadStyle = { style: { 'fontSize': `${isShow ? '25px' : '18px'}` } }
 
     return (
         <section className='observatory'>
