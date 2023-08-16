@@ -109,7 +109,10 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
                     })
                 }
             })
+            // @ts-ignore
+            dataTable.sort((a, b) => a.id - b.id)
             console.log(dataTable)
+
             // @ts-ignore
             setDataTableTree([...dataTable])
         }
@@ -172,7 +175,7 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
             render: (_, record) => {
                 const text = record.isSender ? 'Исходящие' : 'Входящие'
                 return (
-                    <p>{text}</p>
+                    <p style={text === 'Исходящие' ? { 'color': '#02418a' } : { 'color': '#48028a' }}>{text}</p>
                 )
             }
         },
@@ -201,6 +204,7 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
             <p className="observatory__title">Oтчет по обсерваториям за {dateReport}</p>
             <div className="observatory_table_type_day" >
                 <Table
+                    size="small"
                     onRow={(record, index) => { return rowStyle }}
                     onHeaderRow={(record, index) => { return rowHeadStyle }}
                     columns={columns}
