@@ -46,7 +46,8 @@ export type TreeTableType = {
     name: string | undefined,
     type: string | undefined,
     count: number,
-    children?: TreeTableType[]
+    children?: TreeTableType[],
+    isSender: boolean
 }
 
 

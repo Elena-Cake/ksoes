@@ -2,7 +2,7 @@ import React from "react";
 import './GetReportsObservatory.scss';
 import { useAppDispatch } from "../../store/store";
 import FormDates from "../FormDates/FormDates";
-import { getMeansByDay, getMeansByDays, getMeansByStatDay, getObservatoryByDay, getObservatoryByDays, getObservatoryByStatDay } from "../../store/dataSlice";
+import { getMeansByDay, getMeansByDays, getMeansByStatDay, getObservatoryByDay, getObservatoryByDaySender, getObservatoryByDays, getObservatoryByDaysSender, getObservatoryByStatDay } from "../../store/dataSlice";
 import Observatory from "../Observatory/Observatory";
 
 
@@ -14,9 +14,11 @@ const GetReportsObservatory: React.FC = () => {
         if (date_end) {
             dispatch(getObservatoryByDays({ date_start, date_end }))
             dispatch(getMeansByDays({ date_start, date_end }))
+            dispatch(getObservatoryByDaysSender({ date_start, date_end }))
         } else {
             dispatch(getObservatoryByDay({ date_start }))
             dispatch(getMeansByDay({ date_start }))
+            dispatch(getObservatoryByDaySender({ date_start }))
         }
     }
 

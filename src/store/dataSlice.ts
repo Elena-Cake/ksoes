@@ -8,6 +8,7 @@ import { getDataWithDots } from '../utils/functions'
 
 const initialState = {
     observatoryDay: [] as ObservatoryRecordsDayType[],
+    observatoryReportSender: [] as ObservatoryRecordsDayType[],
     meansDay: [] as MeansRecordsDayType[],
     isStatReportObservatoryUpdate: true,
     error: null as string | null,
@@ -54,6 +55,29 @@ export const getMeansByDays = createAsyncThunk(
     'data/meansDays',
     async (formValues: dateFormValues, { rejectWithValue }) => {
         const response = await api.getMeansByDays(formValues)
+        return response
+    }
+)
+
+
+export const getObservatoryByStatDaySender = createAsyncThunk(
+    'data/observatoryStatDaySender',
+    async () => {
+        const response = await api.getObservatoryByStatDaySender()
+        return response
+    }
+)
+export const getObservatoryByDaySender = createAsyncThunk(
+    'data/observatoryDaySender',
+    async (formValues: dateFormValues, { rejectWithValue }) => {
+        const response = await api.getObservatoryByDaySender(formValues)
+        return response
+    }
+)
+export const getObservatoryByDaysSender = createAsyncThunk(
+    'data/observatoryDaysSender',
+    async (formValues: dateFormValues, { rejectWithValue }) => {
+        const response = await api.getObservatoryByDaysSender(formValues)
         return response
     }
 )
@@ -118,6 +142,42 @@ const dataSlice = createSlice({
                 }
             })
             .addCase(getObservatoryByDays.rejected, (state) => {
+                state.error = errorTexts.network.ERROR_NETWORK
+            })
+
+            // Sender
+            // getObservatoryByStatDaySender
+            .addCase(getObservatoryByStatDaySender.pending, (state) => {
+            })
+            .addCase(getObservatoryByStatDaySender.fulfilled, (state, action) => {
+                if (action.payload.success) {
+                    state.observatoryReportSender = action.payload.records.filter(item => item.count !== 0)
+                }
+            })
+            .addCase(getObservatoryByStatDaySender.rejected, (state) => {
+                state.error = errorTexts.network.ERROR_NETWORK
+            })
+            // getObservatoryByDaySender
+            .addCase(getObservatoryByDaySender.pending, (state) => {
+
+            })
+            .addCase(getObservatoryByDaySender.fulfilled, (state, action) => {
+                if (action.payload.success) {
+                    state.observatoryReportSender = action.payload.records.filter(item => item.count !== 0)
+                }
+            })
+            .addCase(getObservatoryByDaySender.rejected, (state) => {
+                state.error = errorTexts.network.ERROR_NETWORK
+            })
+            // getObservatoryByDaysSender
+            .addCase(getObservatoryByDaysSender.pending, (state) => {
+            })
+            .addCase(getObservatoryByDaysSender.fulfilled, (state, action) => {
+                if (action.payload.success) {
+                    state.observatoryReportSender = action.payload.records.filter(item => item.count !== 0)
+                }
+            })
+            .addCase(getObservatoryByDaysSender.rejected, (state) => {
                 state.error = errorTexts.network.ERROR_NETWORK
             })
 

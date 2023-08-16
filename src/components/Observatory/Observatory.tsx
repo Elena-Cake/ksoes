@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import './Observatory.scss';
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { getMeansByStatDay, getObservatoryByStatDay } from "../../store/dataSlice";
+import { getMeansByStatDay, getObservatoryByStatDay, getObservatoryByStatDaySender } from "../../store/dataSlice";
 import { TIME_UPDATE_REPORT } from "../../constans/constans";
 import { TreeTableType } from "../../types/types";
 import { Table } from "antd";
@@ -21,6 +21,7 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
     const observatoryDay = useAppSelector(s => s.dataSlice.observatoryDay)
     const meansDay = useAppSelector(s => s.dataSlice.meansDay)
 
+    const observatoryDaySender = useAppSelector(s => s.dataSlice.observatoryReportSender)
 
     const typesFiltersValues = types.map(type => {
         return {
@@ -40,6 +41,7 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
             if (isReportUpdate) {
                 dispatch(getObservatoryByStatDay())
                 dispatch(getMeansByStatDay())
+                dispatch(getObservatoryByStatDaySender())
             } else {
                 stopSendingRequests();
             }
@@ -62,15 +64,27 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
     }, [isReportUpdate])
 
     useEffect(() => {
-        if (observatoryDay) {
+        if (observatoryDay && observatoryDaySender) {
             const dataTable: TreeTableType[] = observatoryDay.map((data, i) => {
                 return {
                     key: i,
                     id: data.id_observatory,
                     name: String(observatory[data.id_observatory]),
                     type: types.find(type => type.id === data.id_type)?.name,
-                    count: data.count
+                    count: data.count,
+                    isSender: false
                 }
+            })
+            observatoryDaySender.forEach((data, i) => {
+                let j = i + dataTable.length
+                dataTable.push({
+                    key: j,
+                    id: data.id_observatory,
+                    name: String(observatory[data.id_observatory]),
+                    type: types.find(type => type.id === data.id_type)?.name,
+                    count: data.count,
+                    isSender: true
+                })
             })
             meansDay.forEach(data => {
                 const idObs = means.find(mean => mean.id_mean === String(data.id_mean))?.id_observatory
@@ -90,20 +104,77 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
                         id_mean: data.id_mean,
                         name: name?.slice(name?.indexOf(' ')),
                         type: types.find(type => type.id === data.id_type)?.name,
-                        count: data.count
+                        count: data.count,
+                        isSender: false
                     })
                 }
             })
+            console.log(dataTable)
             // @ts-ignore
             setDataTableTree([...dataTable])
         }
-    }, [observatoryDay])
+    }, [observatoryDay, observatoryDaySender])
+
+    // const columns: ColumnsType<TreeTableType> = [
+    //     {
+    //         title: "Название",
+    //         dataIndex: "name",
+    //         key: "name",
+    //         // rowScope: 'rowgroup'
+    //     },
+    //     {
+    //         title: "Входящие",
+    //         children: [
+    //             {
+    //                 title: "Тип",
+    //                 dataIndex: "type",
+    //                 key: "type",
+    //                 filters: typesFiltersValues,
+    //                 onFilter: (value, record) => record.type === value
+    //             },
+    //             {
+    //                 title: "Количество",
+    //                 dataIndex: "count",
+    //                 key: "count"
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         title: "Исходящие",
+    //         children: [
+    //             {
+    //                 title: "Тип",
+    //                 dataIndex: "type",
+    //                 key: "type",
+    //                 filters: typesFiltersValues,
+    //                 onFilter: (value, record) => record.type === value
+    //             },
+    //             {
+    //                 title: "Количество",
+    //                 dataIndex: "count",
+    //                 key: "count"
+    //             }
+    //         ]
+    //     }
+    // ];
 
     const columns: ColumnsType<TreeTableType> = [
         {
             title: "Название",
             dataIndex: "name",
-            key: "name"
+            key: "name",
+            // rowScope: 'rowgroup'
+        },
+        {
+            title: "Тип Сообщения",
+            dataIndex: "isSender",
+            key: "isSender",
+            render: (_, record) => {
+                const text = record.isSender ? 'Исходящие' : 'Входящие'
+                return (
+                    <p>{text}</p>
+                )
+            }
         },
         {
             title: "Тип",
@@ -117,6 +188,7 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
             dataIndex: "count",
             key: "count"
         }
+
     ];
 
     useEffect(() => () => stopSendingRequests(), []);

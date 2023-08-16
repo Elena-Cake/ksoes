@@ -4,7 +4,7 @@ import Login from './Login/Login';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { checkToken, removeSuccsessMessageAuth } from '../store/authSlice';
 import Header from './Header/Header';
-import { getMeansByStatDay, getObservatoryByStatDay, removeSuccsessMessageData } from '../store/dataSlice';
+import { getMeansByStatDay, getObservatoryByStatDay, getObservatoryByStatDaySender, removeSuccsessMessageData } from '../store/dataSlice';
 // import Means from './Means/Means';
 import Spinner from './Spinner/Spinner';
 import { removeError } from '../store/appSlice';
@@ -87,6 +87,7 @@ function App() {
       }
       dispatch(getObservatoryByStatDay())
       dispatch(getMeansByStatDay())
+      dispatch(getObservatoryByStatDaySender())
     }
   }, [isAuth])
 
