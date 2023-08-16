@@ -177,7 +177,17 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
                 return (
                     <p style={text === 'Исходящие' ? { 'color': '#02418a' } : { 'color': '#48028a' }}>{text}</p>
                 )
-            }
+            },
+            filters: [{
+                text: 'Входящие',
+                value: false,
+            },
+            {
+                text: 'Исходящие',
+                value: true,
+            }],
+            onFilter: (value, record) => record.isSender === value
+
         },
         {
             title: "Тип",
