@@ -69,7 +69,7 @@ const Observatory: React.FC<{ isShow?: boolean }> = ({ isShow = false }) => {
         previsReportUpdateRef.current = isReportUpdate
     }, [isReportUpdate])
 
-    // const stylesRow = isShow ? { 'fontSize': '25px' } : { 'margin': '4px 15px', 'fontSize': '18px' }
+    const stylesRow = isShow ? { 'fontSize': '25px' } : { 'margin': '4px 15px', 'fontSize': '18px' }
 
     // const columns: ColumnsType<TreeTableType> = [
     //     {
