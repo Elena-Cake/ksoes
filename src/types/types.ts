@@ -50,6 +50,16 @@ export type TreeTableType = {
     isSender: boolean
 }
 
+export type TreeTableTypeMessages = {
+    key: string | number,
+    id: number | string,
+    name: string | undefined,
+    typeResiv: string | undefined,
+    countResiv: number | undefined,
+    typeSender: string | undefined,
+    countSender: number | undefined,
+}
+
 
 export type dateFormValues = {
     date_start: string,

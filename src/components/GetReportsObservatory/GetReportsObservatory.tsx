@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../store/store";
 import FormDates from "../FormDates/FormDates";
 import { getMeansByDay, getMeansByDays, getMeansByStatDay, getObservatoryByDay, getObservatoryByDaySender, getObservatoryByDays, getObservatoryByDaysSender, getObservatoryByStatDay } from "../../store/dataSlice";
 import Observatory from "../Observatory/Observatory";
+import Types from "../Types/Types";
 
 
 const GetReportsObservatory: React.FC = () => {
