@@ -5,7 +5,7 @@ export const checkNameType = (name: string) => {
     if (name.toLowerCase().includes('измерения')) return 'Измерения'
     switch (name) {
         case 'HW Tracks':
-            return 'Измерения'
+            return 'Астрометрия'
         case 'HW Meteo':
             return 'Метеоданные'
         case 'HW Fci':
